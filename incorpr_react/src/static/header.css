@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    margin: 0; /* Добавим обнуление всех отступов */
+    padding: 0; /* Добавим обнуление всех полей */
+}
+
+#header {
+    background-color: #252525;
+    color: #FFFFFF !important;
+    font-size: 16px;
+    padding-left: 105px;
+    padding-right: 105px;
+    height: 55px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: none; /* Убираем нижнюю границу */
+}
+
+.header-content {
+    display: flex;
+    flex-md-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0; /* Убираем нижний отступ */
+    margin-bottom: 0; /* Убираем нижний отступ */
+    border-bottom: none; /* Убираем нижнюю границу */
+}
+
+#navigation a {
+    color: #ffffff !important; /* Цвет ссылок белый */
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+#navigation a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #ffffff;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+#navigation a:hover {
+    color: #ffffff !important;
+}
+
+#navigation a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.logo {
+    margin-right: 30px;  /* 30px расстояние между логотипом и навигационной панелью */
+    font-weight: normal;
+    display: flex;
+    align-items: center;  /* Центрирование логотипа по вертикали */
+    height: 55px;
+}
+
+.logo a {
+    text-decoration: none;
+    color: inherit;
+    font-family: 'Gugi', sans-serif !important;
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: inline-flex;
+    margin-top: 0.5rem;
+    margin-md-top: 0;
+    position: relative;
+    top: -8px; /* Поднять на 8 пикселей выше */
+}
+
+.nav-link {
+    margin-top: 7.5px;
+    margin-right: 30px;  /* 30px расстояние между ссылками */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    color: #FFFFFF !important;
+    text-decoration: none;
+}
+
+.sign-in-icon, .profile-icon {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: -4px; /* Поднять на 4 пикселя выше */
+}
+
+.icon-tabler {
+    stroke: currentColor;
+}
+
+/* Изменение цвета иконок при наведении */
+
+#profile:hover .icon-tabler {
+    stroke: #b0b0b0; /* Светло-серый цвет при наведении */
+    fill: #b0b0b0;   /* Светло-серый цвет заливки при наведении */
+}
+
+#sign-in:hover .icon-tabler {
+    stroke: #b0b0b0; /* Светло-серый цвет при наведении */
+}
+
+#sign-in, #profile {
+    color: #FFFFFF;
+}

@@ -1,0 +1,74 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-content {
+    width: auto;
+    background-color: #EDEDED;
+}
+h2 { font-size: 16px; font-family: Gugi,sans-serif !important; }
+p { font-size: 14px; font-family: Gugi,sans-serif !important; }
+.head {
+    background-color: #F8F8F8; color: #252525; border: 1px solid #F3F3F3;
+    height: 50px; width: 1027px;
+    padding-left: 10px;
+    display: flex; flex-direction: row;
+    align-items: center; /* Центрирование текста по вертикали */
+}
+.section { background: #fff; height: auto; width: 1027px;
+    display: flex; flex-direction: column; }
+.type {
+    background-color: #FFFFFF; color: #252525; border: 1px solid #F3F3F3;
+    height: 40px; width: 1027px;
+    display: flex; flex-direction: row;
+    align-items: center; /* Центрирование текста по вертикали */
+    padding-left: 10px; padding-right: 10px;
+}
+.date { color: rgb(37, 37, 37, 0.25); }
+.event-info {
+    display: flex; flex-direction: row; justify-content: space-between; width: 1007px;
+}
+.description {
+    padding-right: 10px;; padding-left: 10px;
+}
+.centered-text-btn {
+    color: #FFFFFF;
+    background-color: #252525;
+    border: 1px solid #252525;
+    border-radius: 2px;
+    width: 170px;
+    height: 30px;
+    font-size: 15px;
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
+    text-decoration: none;
+}
+.action {
+    padding-top: 15px; display: flex; flex-direction: row; justify-content: space-between; width: 1027px;
+}
+.icons {
+    width: fit-content; display: flex; flex-direction: row; gap: 30px; align-items: center;
+}
+.edit-icon, .delete-icon, .users-icon, .pdf-icon {
+    cursor: pointer;
+}
+.edit-icon:hover, .delete-icon:hover, .users-icon:hover, .pdf-icon:hover {
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
+}
+.top5 {
+    position: relative; top: 5px;
+}

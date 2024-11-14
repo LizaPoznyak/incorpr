@@ -1,0 +1,69 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-content {
+    width: auto;
+    background-color: #EDEDED;
+}
+h2 { font-size: 16px; font-family: Gugi,sans-serif !important; }
+p { font-size: 15px; font-family: Gugi,sans-serif !important; }
+.head {
+    background-color: #252525; color: #FFFFFF;
+    height: 40px; width: 820px;
+    padding-left: 10px; padding-top: 7px;
+    display: flex; flex-direction: row;
+    align-items: center; /* Центрирование текста по вертикали */
+}
+.section {
+    background: #fff;
+    height: auto;
+    width: 820px;
+    display: flex; flex-direction: column;
+}
+.avatar {
+    border: 1px solid #F3F3F3;
+    border-radius: 5px;
+    width: auto;
+    height: 100px;
+}
+.avatar-container {
+    padding-left: 90px; padding-top: 40px;
+}
+.profile-info {
+    padding-left: 90px; padding-top: 60px;
+    display: flex; flex-direction: column;
+}
+.icons {
+    display: flex; flex-direction: row;
+    align-items: center;
+    width: 640px;
+    justify-content: flex-end;
+    gap: 20px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    margin-left: 90px;
+    margin-right: 90px;
+}
+.edit-icon, .delete-icon, .exit-icon {
+    cursor: pointer;
+}
+.edit-icon:hover, .delete-icon:hover, .exit-icon:hover {
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
+}
+.profile-info-container {
+    display: flex; flex-direction: row;
+}

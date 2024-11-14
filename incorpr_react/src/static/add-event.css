@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+  }
+  .main-content {
+    width: 730px;
+    padding: 60px 35px;
+    background-color: #EDEDED;
+  }
+  h2 { font-size: 16px; font-family: Gugi,sans-serif !important; }
+  .head {
+    background-color: #252525; color: #FFFFFF;
+    height: 40px; width: 1027px;
+    padding-left: 10px; padding-top: 7px;
+    display: flex; flex-direction: row;
+    align-items: center; /* Центрирование текста по вертикали */
+  }
+  form {
+    background-color: #FFFFFF;
+    width: 1027px; height: auto;
+    display: flex; flex-direction: column; align-items: center; gap: 30px; justify-content: center;
+    padding: 50px 80px;
+  }
+  .form-control {
+    background: #f8f8f8; border: 1px solid #dbdbdb; border-radius: 0 !important; width: 835px; height: 35px; }
+  .form-control::placeholder { color: #7b7b7b; }
+  .btn-custom { color: #ffffff; background-color: #252525;
+    border: none; border-radius: 2px; width: 100px; height: 30px; font-size: 15px; }
+  .radio-group {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .radio-group input[type="radio"] {
+    margin-right: 10px;
+  }
+  legend {
+    font-size: 16px;
+  }
+  label {
+    font-size: 16px;
+  }
+  .radio {
+    background: #f8f8f8; border: 1px solid #dbdbdb; border-radius: 5px;
+    width: auto;
+    padding: 5px 10px;
+  }
+  .centered-text-btn {
+    color: #FFFFFF;
+    background-color: #252525;
+    border: 1px solid #252525;
+    border-radius: 2px;
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
+    text-decoration: none;
+  }
+  .input {
+    display: flex; flex-direction: column; justify-content: left; gap: 15px;
+  }
+  textarea {
+    height: 185px;
+  }
+  datetime {
+    width: 220px;
+  }

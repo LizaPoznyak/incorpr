@@ -1,0 +1,45 @@
+a {
+    font-family: Gugi,sans-serif !important;
+}
+
+h1 {
+    font-family: Gugi,sans-serif !important;
+}
+
+h3 {
+    font-family: Gugi,sans-serif !important;
+}
+
+p {
+    font-family: Gugi,sans-serif !important;
+}
+
+@font-face {
+    font-family: 'Gugi';
+    src: url('C:/Users/admin/incorpr repository/incorpr_react/src/fonts/Gugi-Regular.ttf') format('truetype');
+}
+
+button {
+    background-color: #252525;
+    border: 2px solid #252525;
+    color: #FFFFFF;
+}
+
+button:hover {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    background-color: #EDEDED;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+}
+
+.abtn:hover {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+main {
+    background-color: #EDEDED;
+}

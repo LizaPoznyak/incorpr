@@ -1,0 +1,122 @@
+.container {
+    display: flex;
+}
+.main-content {
+    width: 730px;
+    padding: 60px 35px;
+    background-color: #EDEDED;
+}
+.banner { text-align: center; background-color: #EDEDED;
+    height: auto;
+    width: 700px;
+    padding-bottom: 15px;
+}
+.section { background: #fff; height: auto; width: 700px;
+    display: flex; flex-direction: column; }
+p { font-size: 14px; padding-left: 15px; font-family: Gugi,sans-serif !important; }
+h2 { font-size: 15px; padding-left: 15px; padding-right: 15px; font-family: Gugi,sans-serif !important; }
+h1 { font-size: 16px;
+    font-family: Gugi,sans-serif !important;
+}
+.head {
+    background-color: #252525; color: #FFFFFF;
+    height: 45px;
+    padding: 15px 65px 15px 33px;
+    display: flex; flex-direction: row;
+    justify-content: space-between; /* Распределение элементов по краям */
+    align-items: center; /* Центрирование текста по вертикали */
+}
+.date { color: rgb(37, 37, 37, 0.25); }
+.type {
+    text-align: center;
+    margin-left: auto;
+    width: 150px;
+    padding-right: 15px;
+}
+.event { border: 1px solid #F3F3F3; background-color: #FFFFFF; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; display: flex; flex-direction: row; }
+.centered-text-btn {
+    color: #FFFFFF;
+    background-color: #252525;
+    border: 1px solid #252525;
+    border-radius: 2px;
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
+    text-decoration: none;
+}
+.sidebar-section {
+    padding-top: 15px; height: 205px; width: 314px; display: flex; flex-direction: column; }
+.sidebar-head {
+    background-color: #252525; color: #FFFFFF;
+    height: 40px; width: 314px; padding-top: 20px; padding-bottom: 15px;
+    display: flex; flex-direction: row;
+    justify-content: space-between; /* Распределение элементов по краям */
+    align-items: center; /* Центрирование текста по вертикали */
+}
+.odd { border: 1px solid #F3F3F3; background-color: #FFFFFF; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; display: flex; flex-direction: row; }
+.even { border: 1px solid #F3F3F3; background-color: #F8F8F8; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; display: flex; flex-direction: row; }
+.sidebar-svg {
+    margin-left: 15px; /* Отступ для всех SVG элементов */
+}
+.sidebar-p {
+    width: 254px; height: 25px;
+    white-space: nowrap; /* Запрещает перенос текста */
+    overflow: hidden; /* Скрывает текст, который не помещается */
+    text-overflow: ellipsis; /* Добавляет многоточие в конце */
+}
+.sidebar { width: 314px;
+    padding: 87px 20px 20px;
+    background-color: #EDEDED; }
+.type-filter {
+    width: 157px; height: 40px;
+    background-color: #FFFFFF;
+    border: 1px solid #F3F3F3;
+}
+.filter-section {
+    width: 314px; height: 120px;
+}
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 12px;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    width:314px
+}
+.type-filter {
+    width: 157px;
+    height: 40px;
+    background-color: #F8F8F8;
+    border: 1px solid #F3F3F3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Gugi', sans-serif;
+    font-size: 14px;
+    color: #252525;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0;
+}
+.type-filter.active {
+    background-color: #252525;
+    color: #FFFFFF;
+    border: 1px solid #252525;
+}
+/*.type-filter:hover {*/
+/*    background-color: #e0e0e0;*/
+/*    border: 1px solid #F3F3F3;*/
+/*    color: #252525;*/
+/*}*/
+.black {
+    text-decoration: none; color: #252525
+}
+.add-btn {
+    width: 730px; padding-top: 15px; display: flex; justify-content: center;
+}
