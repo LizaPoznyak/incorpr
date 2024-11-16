@@ -16,50 +16,48 @@ const EditEvent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/api/events/edit', { title, description, type, date });
-            // Redirect to events page or show success message
+            await axios.post('/events/edit', { title, description, type, date });
         } catch (err) {
             setError('Ошибка при редактировании мероприятия. Попробуйте еще раз.');
         }
     };
 
     return (
-        <div>
+        <div className="body">
             <Header />
-            <main className="container">
-                <div className="main-content">
+            <main className="container-add-event">
+                <div className="main-content-add-event">
                     <h2>Мероприятия</h2>
-                    <div className="head">
+                    <div className="head-add-event">
                         <h2>Редактировать</h2>
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="input">
-                            <label>
+                    <form className="form-add-event" onSubmit={handleSubmit}>
+                        <div className="input-add-event">
+                            <label className="label-add-event">
                                 Название
                                 <input
                                     type="text"
                                     name="title"
-                                    className="form-control"
+                                    className="form-control-add-event"
                                     required
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </label>
-                            <label>
+                            <label className="label-add-event">
                                 Описание
                                 <textarea
                                     name="description"
-                                    className="form-control"
+                                    className="form-control-add-event description-add-event"
                                     required
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    style={{ height: '185px' }}
                                 ></textarea>
                             </label>
                             <fieldset>
                                 <legend>Тип мероприятия</legend>
-                                <div className="radio-group">
-                                    <label className="radio">
+                                <div className="radio-group-add-event">
+                                    <label className="radio-add-event">
                                         <input
                                             type="radio"
                                             name="type"
@@ -69,7 +67,7 @@ const EditEvent = () => {
                                             onChange={(e) => setType(e.target.value)}
                                         /> Хакатон
                                     </label>
-                                    <label className="radio">
+                                    <label className="radio-add-event">
                                         <input
                                             type="radio"
                                             name="type"
@@ -79,7 +77,7 @@ const EditEvent = () => {
                                             onChange={(e) => setType(e.target.value)}
                                         /> IT-конференция
                                     </label>
-                                    <label className="radio">
+                                    <label className="radio-add-event">
                                         <input
                                             type="radio"
                                             name="type"
@@ -91,20 +89,19 @@ const EditEvent = () => {
                                     </label>
                                 </div>
                             </fieldset>
-                            <label>
+                            <label className="label-add-event">
                                 Дата и время
                                 <input
                                     type="datetime-local"
                                     name="date"
-                                    className="form-control datetime"
+                                    className="form-control-add-event datetime-add-event"
                                     required
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
-                                    style={{ width: '220px' }}
                                 />
                             </label>
                         </div>
-                        <button type="submit" className="abtn centered-text-btn">Сохранить</button>
+                        <Link to="/events/id" className="abtn centered-text-btn-add-event">Сохранить</Link>
                     </form>
                     {error && <p>{error}</p>}
                 </div>

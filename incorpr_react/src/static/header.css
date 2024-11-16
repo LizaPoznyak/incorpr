@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
-    margin: 0; /* Добавим обнуление всех отступов */
-    padding: 0; /* Добавим обнуление всех полей */
+    margin: 0; 
+    padding: 0; 
 }
 
 #header {
@@ -17,7 +17,19 @@
     right: 0;
     border-bottom: none; /* Убираем нижнюю границу */
 }
-
+.logo-nav-header {
+    display: flex;
+    flex-md-direction: row;
+    width: fit-content;
+}
+.header-icons{
+    display: flex;
+    flex-md-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    gap: 20px !important;
+}
 .header-content {
     display: flex;
     flex-md-direction: row;
@@ -49,7 +61,7 @@
 #navigation a:hover {
     color: #ffffff !important;
 }
-
+ 
 #navigation a:hover::after {
     width: 100%;
     left: 0;

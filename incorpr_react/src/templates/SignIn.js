@@ -11,25 +11,23 @@ const SignIn = () => {
         <div>
             <Header />
             <main>
-                <div className="container">
-                    <div className="main-container">
-                        <h2>Войти</h2>
-                        <form action="/sign-in" method="post">
-                            <div className="mb-3">
-                                <label>
-                                    <input type="text" name="username" placeholder="Логин" className="form-control" required/>
-                                </label>
-                            </div>
-                            <div className="mb-3">
-                                <label>
-                                    <input type="password" name="password" placeholder="Пароль" className="form-control" required/>
-                                </label>
-                            </div>
-                            <button type="submit" className="abtn btn-custom">Войти</button>
-                        </form>
-                        <div className="mt-3 link">
-                            <Link to="/sign-up" className="sign-up-link">Зарегистрироваться</Link>
+                <div className="container-sign-in">
+                    <h2>Войти</h2>
+                    <form className="form-sign-in" action="/sign-in" method="post">
+                        <div className="mb-3-sign-in">
+                            <label>
+                                <input type="text" name="username" placeholder="Логин" className="form-control-sign-in" required/>
+                            </label>
                         </div>
+                        <div className="mb-3-sign-in">
+                            <label>
+                                <input type="password" name="password" placeholder="Пароль" className="form-control-sign-in" required/>
+                            </label>
+                        </div>
+                        <Link to="/" className="abtn btn-custom-sign-in">Войти</Link>
+                    </form>
+                    <div className="mt-3-sign-in link-sign-in">
+                        <Link to="/sign-up" className="sign-up-link-sign-in">Зарегистрироваться</Link>
                     </div>
                 </div>
             </main>

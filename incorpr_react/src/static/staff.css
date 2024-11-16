@@ -1,63 +1,72 @@
-.container {
+.body-staff {
+    background-color: #EDEDED;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: 30px !important;
+    height: 100% !important;
+    padding-right: 320px !important;
+}
+.container-staff {
     display: flex; flex-direction: column;
 }
-.main-content {
+.main-content-staff {
     width: 730px;
-    padding: 60px 35px;
     background-color: #EDEDED;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 h2 { font-size: 16px; font-family: Gugi,sans-serif !important; }
-.head {
+.head-staff {
     background-color: #252525; color: #FFFFFF;
     height: 40px; width: 1027px;
     padding-left: 60px;
     display: flex; flex-direction: row;
     align-items: center; /* Центрирование текста по вертикали */
 }
-.section { background: #fff; height: auto; width: 1027px;
+.section-staff { background: #fff; height: auto; width: 1027px;
     display: flex; flex-direction: column; }
-.employee {
+.employee-staff {
     height: 120px; width: 1027px;
     display: flex; flex-direction: row; justify-content: space-between;
-    padding-left: 20px; padding-right:20px;
+    padding-left: 20px; padding-right:60px !important;
     border: 1px solid #F3F3F3;
 }
-.employee-info {
+.employee-info-staff {
     display: flex; flex-direction: row;
     align-items: center;
 }
-.icons {
+.icons-staff {
     display: flex; flex-direction: row;
     align-items: center;
     width: 90px;
     justify-content: space-between;
 }
-.avatar {
+.avatar-staff {
     border: 1px solid #F3F3F3;
     border-radius: 5px;
     width: auto;
     height: 100px;
 }
 p { font-size: 15px; font-family: Gugi,sans-serif !important; }
-.username { padding-left: 50px; width: 200px;
+.username-staff { padding-left: 50px; width: 200px;
     position: relative; top: 8px;
 }
-.position { padding-left: 50px; width: 600px;
+.position-staff { padding-left: 50px; width: 600px;
     position: relative; top: 8px;
 }
-.edit-icon {
+.edit-icon-staff {
     cursor: pointer;
 }
-.delete-icon {
+.delete-icon-staff {
     cursor: pointer;
 }
-.edit-icon:hover {
+.edit-icon-staff:hover {
     filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
 }
-.delete-icon:hover {
+.delete-icon-staff:hover {
     filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
 }
-.link {
+.link-staff {
     text-decoration: none; color: #252525; 
     display: flex; align-items: center; justify-content: center; top: -5px;
 }

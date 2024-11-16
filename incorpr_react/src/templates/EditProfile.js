@@ -5,11 +5,12 @@ import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/edit-profile.
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
 import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/footer';
+import Avatar from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/avatar 1.png';
 
 const EditProfile = () => {
     const [username, setUsername] = useState('TechGuru42');
     const [position, setPosition] = useState('Главный технический директор');
-    const [avatar, setAvatar] = useState('C:/Users/admin/incorpr repository/incorpr_react/src/img/avatar 1.png');
+    const [avatar, setAvatar] = useState(Avatar);
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
 
@@ -34,7 +35,7 @@ const EditProfile = () => {
         }
         
         try {
-            await axios.post('/api/sign-up', formData, {
+            await axios.post('/sign-up', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -46,30 +47,30 @@ const EditProfile = () => {
     };
 
     return (
-        <div>
+        <div class="body">
             <Header />
-            <main>
-                <div className="head">
+            <main className="main-container-edit-profile">
+                <div className="head-edit-profile">
                     <h2>Профиль</h2>
                 </div>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
-                    <div className="profile-container">
-                        <div className="avatar-container">
-                            <div className="avatar">
+                    <div className="profile-container-edit-profile">
+                        <div className="avatar-container-edit-profile">
+                            <div className="avatar-edit-profile">
                                 <label>
-                                    <img id="avatar-preview" src={avatar} alt="avatar" onClick={() => document.getElementById('avatar-input').click()} />
-                                    <div className="plus-icon">+</div>
-                                    <input type="file" id="avatar-input" name="avatar" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
+                                    <img id="avatar-preview-edit-profile" src={avatar} alt="avatar" onClick={() => document.getElementById('avatar-input').click()} />
+                                    <div className="plus-icon-edit-profile">+</div>
+                                    <input type="file" id="avatar-inputv" name="avatar" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
                                 </label>
                             </div>
                         </div>
-                        <div className="text-info-fields">
+                        <div className="text-info-fields-edit-profile">
                             <label>
                                 Логин
                                 <input
                                     type="text"
                                     name="username"
-                                    className="form-control"
+                                    className="form-control-edit-profile"
                                     value={username}
                                     required
                                     onChange={(e) => setUsername(e.target.value)}
@@ -80,7 +81,7 @@ const EditProfile = () => {
                                 <input
                                     type="text"
                                     name="position"
-                                    className="form-control"
+                                    className="form-control-edit-profile"
                                     value={position}
                                     required
                                     onChange={(e) => setPosition(e.target.value)}
@@ -88,9 +89,7 @@ const EditProfile = () => {
                             </label>
                         </div>
                     </div>
-                    <div>
-                        <button type="submit" className="abtn centered-text-btn">Сохранить</button>
-                    </div>
+                    <Link to="/staff/id" className="abtn centered-text-btn-edit-profile">Сохранить</Link>
                 </form>
                 {error && <p>{error}</p>}
             </main>

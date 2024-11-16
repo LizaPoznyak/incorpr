@@ -1,17 +1,20 @@
-body, html { height: 100%; margin: 0; }
-        main { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; /* За вычетом высоты header и footer */ }
+.body { height: 100%; margin: 0; }
+        main { display: flex; flex-direction: column; align-items: center; justify-content: center;  /* За вычетом высоты header и footer */ }
         h1 { font-size: 18px;
             font-family: Gugi,sans-serif !important;
         }
-        .head {
+        .main-container-sign-up {
+           padding-top: 60px;
+        }
+        .head-sign-up {
             background-color: #252525; color: #FFFFFF;
-            height: 50px; width: 820px;
+            height: 45px !important; width: 820px;
             padding-left: 20px; padding-top: 7px;
             display: flex; flex-direction: row;
             justify-content: space-between; /* Распределение элементов по краям */
             align-items: center; /* Центрирование текста по вертикали */
         }
-        .avatar-container {
+        .avatar-container-sign-up {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,9 +27,9 @@ body, html { height: 100%; margin: 0; }
             border: 1px solid #dbdbdb;
             cursor: pointer;
         }
-        .plus-icon {
+        .plus-icon-sign-up {
             position: absolute;
-            top: 64px;
+            top: 60px;
             left: 0;
             transform: translate(0, 0); /* Выравнивание по центру */
             width: 100px;
@@ -42,27 +45,29 @@ body, html { height: 100%; margin: 0; }
             transition: opacity 0.3s ease;
             cursor: pointer;
         }
-        .avatar:hover .plus-icon {
+        .avatar-sign-up:hover .plus-icon-sign-up {
             opacity: 1;
         }
-        .avatar input[type="file"] {
+        .avatar-sign-up input[type="file"] {
             display: none;
         }
-        form {
+        .form {
             background-color: #FFFFFF;
             width: 820px; height: 390px;
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 30px;
             padding: 50px 80px;
         }
-        .form-control {
-            background: #f8f8f8; border: 1px solid #dbdbdb; border-radius: 0 !important; width: 350px; height: 40px; }
-        .form-control::placeholder { color: #7b7b7b; }
-        .btn-custom { color: #ffffff; background-color: #252525;
-            border: none; border-radius: 2px; width: 175px; height: 35px; }
-        label {
-            display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px;
+        .form-control-sign-up {
+            background: #f8f8f8; border: 1px solid #dbdbdb; border-radius: 0 !important; width: 350px; height: 40px; padding-left: 10px !important; }
+        .form-control-sign-up::placeholder { color: #7b7b7b; }
+        .btn-custom-sign-up { color: #ffffff; background-color: #252525;
+            border: none; border-radius: 2px; width: 175px; height: 35px; 
+            text-decoration: 0; display: flex; align-items: center; justify-content: center;
         }
-        .alert-warning {
+        label {
+            display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; color: #252525;
+        }
+        .alert-warning-sign-up {
             padding-left: 30px;
             padding-right: 30px;
             color: #856404;
@@ -73,12 +78,12 @@ body, html { height: 100%; margin: 0; }
             max-width: 500px;
             margin: 0 auto;
         }
-        .form {
+        .form-sign-up {
             display: flex; flex-direction: row; justify-content: space-between; width: 660px;
         }
-        .text-info {
+        .text-info-sign-up {
             display: flex; flex-direction: column; gap: 20px;
         }
-        .button {
+        .button-sign-up {
             display: flex; justify-content: flex-end; width: 660px;
         }

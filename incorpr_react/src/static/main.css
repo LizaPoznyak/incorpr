@@ -1,7 +1,8 @@
 .banner { text-align: center; background-color: #EDEDED;
-    padding: 60px 105px 0;
-    height: auto;
-    width: 1248px;
+    padding: 60px 105px 0 !important;
+    height: auto !important;
+    width: 1240px !important;
+    border: none !important;
 }
 .sections {
     display: grid;
@@ -9,18 +10,24 @@
     gap: 20px 30px; /* Вертикальный отступ 20px, горизонтальный 30px */
     padding: 30px 105px 60px;
 }
-.section { background: #fff; height: 225px; width: 500px; display: flex; flex-direction: column; }
-p { font-size: 14px; padding-left: 15px; font-family: Gugi,sans-serif !important; }
-h2 { font-size: 15px; padding-left: 15px; padding-right: 15px; }
+.section { 
+    background: #FFFFFF; 
+    height: 225px !important; 
+    width: 500px !important; 
+    display: flex; flex-direction: column; 
+}
+p { font-size: 14px; font-family: Gugi,sans-serif !important; }
+h2 { font-size: 15px; }
 .head {
     background-color: #252525; color: #FFFFFF;
-    height: 45px; padding-top: 20px; padding-bottom: 15px;
+    height: 45px !important; padding-top: 20px !important; padding-bottom: 15px !important; width: 500px !important;
     display: flex; flex-direction: row;
-    justify-content: space-between; /* Распределение элементов по краям */
-    align-items: center; /* Центрирование текста по вертикали */
+    padding-left: 15px !important; padding-right: 0 !important; 
+    justify-content: space-between !important; /* Распределение элементов по краям */
+    align-items: center !important; /* Центрирование текста по вертикали */
 }
-.odd { border: 1px solid #F3F3F3; background-color: #FFFFFF; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; display: flex; flex-direction: row; }
-.even { border: 1px solid #F3F3F3; background-color: #F8F8F8; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; display: flex; flex-direction: row; }
+.odd { border: 1px solid #F3F3F3; background-color: #FFFFFF; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; width: 500px !important; display: flex; flex-direction: row; }
+.even { border: 1px solid #F3F3F3; background-color: #F8F8F8; stroke: #F3F3F3; height: 45px; padding-top: 11px; padding-bottom: 15px; width: 500px !important; display: flex; flex-direction: row; }
 svg {
     margin-left: 15px; /* Отступ для всех SVG элементов */
 }
@@ -30,15 +37,18 @@ svg {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 39px 20px;
+    width: 500px;
 }
 .avatar {
     border: 1px solid #F3F3F3;
     border-radius: 5px;
-    width: auto;
+    width: 100px;
     height: 100px;
 }
 main {
     flex: 1;
+    padding-top: 60px !important;
+    padding-bottom: 40px !important;
 }
 .more {
     text-decoration: none; 

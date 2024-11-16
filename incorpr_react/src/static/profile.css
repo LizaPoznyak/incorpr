@@ -1,5 +1,4 @@
-body, html {
-    height: 100%;
+.body {
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -10,44 +9,46 @@ main {
     justify-content: center;
     align-items: center;
 }
-.container {
+.container-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.main-content {
+.main-content-profile {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
     width: auto;
     background-color: #EDEDED;
 }
 h2 { font-size: 16px; font-family: Gugi,sans-serif !important; }
 p { font-size: 15px; font-family: Gugi,sans-serif !important; }
-.head {
+.head-profile {
     background-color: #252525; color: #FFFFFF;
     height: 40px; width: 820px;
     padding-left: 10px; padding-top: 7px;
     display: flex; flex-direction: row;
     align-items: center; /* Центрирование текста по вертикали */
 }
-.section {
+.section-profile {
     background: #fff;
     height: auto;
     width: 820px;
     display: flex; flex-direction: column;
 }
-.avatar {
+.avatar-profile {
     border: 1px solid #F3F3F3;
     border-radius: 5px;
     width: auto;
     height: 100px;
 }
-.avatar-container {
+.avatar-container-profile {
     padding-left: 90px; padding-top: 40px;
 }
-.profile-info {
+.profile-info-profile {
     padding-left: 90px; padding-top: 60px;
     display: flex; flex-direction: column;
 }
-.icons {
+.icons-profile {
     display: flex; flex-direction: row;
     align-items: center;
     width: 640px;
@@ -58,12 +59,12 @@ p { font-size: 15px; font-family: Gugi,sans-serif !important; }
     margin-left: 90px;
     margin-right: 90px;
 }
-.edit-icon, .delete-icon, .exit-icon {
+.edit-icon-profile, .delete-icon-profile, .exit-icon-profile {
     cursor: pointer;
 }
-.edit-icon:hover, .delete-icon:hover, .exit-icon:hover {
+.edit-icon-profile:hover, .delete-icon-profile:hover, .exit-icon-profile:hover {
     filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
 }
-.profile-info-container {
+.profile-info-container-profile {
     display: flex; flex-direction: row;
 }

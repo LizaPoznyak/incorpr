@@ -19,14 +19,14 @@ function App() {
             <Routes> 
                 <Route path="/" element={<Index />} /> 
                 <Route path="/sign-up" element={<SignUp />} /> 
-                <Route path="/profile/:id" element={<Profile />} /> 
+                <Route path="/staff/id" element={<Profile />} /> 
                 <Route path="/staff" element={<Staff />} /> 
                 <Route path="/events" element={<Events />} /> 
-                <Route path="/add-event" element={<AddEvent />} /> 
-                <Route path="/edit-event/:id" element={<EditEvent />} /> 
-                <Route path="/edit-profile" element={<EditProfile />} /> 
-                <Route path="/event-details/:id" element={<EventDetails />} /> 
-                <Route path="/event-registration" element={<EventRegistration />} /> 
+                <Route path="/events/add" element={<AddEvent />} /> 
+                <Route path="/events/id/edit" element={<EditEvent />} /> 
+                <Route path="/staff/id/edit" element={<EditProfile />} /> 
+                <Route path="/events/id" element={<EventDetails />} /> 
+                <Route path="/events/id/users" element={<EventRegistration />} /> 
                 <Route path="/sign-in" element={<SignIn />} />
             </Routes> 
         </Router>
