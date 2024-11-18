@@ -4,6 +4,7 @@ import com.example.incorpr.controllers.main.Main;
 import com.example.incorpr.models.Event;
 import com.example.incorpr.models.EventRegistration;
 import com.example.incorpr.models.User;
+import com.example.incorpr.models.enums.Type;
 import com.example.incorpr.repositories.EventRegistrationRepository;
 import com.example.incorpr.repositories.EventsRepository;
 import com.example.incorpr.repositories.UsersRepository;
@@ -22,9 +23,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/events")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EventsController extends Main {
 
     @Autowired
@@ -36,6 +39,25 @@ public class EventsController extends Main {
 
     @Autowired
     public EventRegistrationRepository eventRegistrationRepository;
+
+    @GetMapping("/types")
+    public ResponseEntity<List<String>> getEventTypes() {
+        List<String> types = Stream.of(Type.values()).map(Enum::name).collect(Collectors.toList());
+        return ResponseEntity.ok(types);
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<Event>> getPopularEvents() {
+        List<Event> events = eventsRepository.findAll();
+        List<Event> popularEvents = events.stream() .sorted((e1, e2) -> {
+            int compare = Integer.compare(e2.getRegistrations().size(), e1.getRegistrations().size());
+            if (compare == 0) {
+                return e2.getDateTime().compareTo(e1.getDateTime());
+            }
+            return compare; })
+                .limit(5)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(popularEvents); }
 
     @GetMapping("/all")
     public ResponseEntity<List<Event>> events() {
@@ -49,17 +71,20 @@ public class EventsController extends Main {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addEventPost(@RequestParam String title, @RequestParam String description, @RequestParam String type, @RequestParam LocalDateTime dateTime) {
-        Event existingEvent = eventsRepository.findByTitle(title);
+    public ResponseEntity<String> addEventPost(@RequestBody Event event) {
+        Event existingEvent = eventsRepository.findByTitle(event.getTitle());
         if (existingEvent != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique title");
         }
         LocalDateTime currentDate = LocalDateTime.now();
-        if (dateTime.isBefore(currentDate)) {
+        if (event.getDateTime().isBefore(currentDate)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose future date");
         }
-        Event event = new Event(title, type, description, dateTime);
-        eventsRepository.save(event);
+        try {
+            eventsRepository.save(event);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving event: " + e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Event was added");
     }
 

@@ -14,8 +14,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 120px !important;
-    padding-bottom: 120px !important;
+    padding-top: 150px !important;
+    padding-bottom: 150px !important;
 }
 .main-content-event-details {
     width: auto;
@@ -26,7 +26,7 @@ p { font-size: 14px; font-family: Gugi,sans-serif !important; }
 .head-event-details {
     background-color: #F8F8F8; color: #252525; border: 1px solid #F3F3F3;
     height: 50px; width: 1027px;
-    padding-left: 10px;
+    padding-left: 15px; padding-right: 10px;
     display: flex; flex-direction: row;
     align-items: center; /* Центрирование текста по вертикали */
 }
@@ -37,14 +37,14 @@ p { font-size: 14px; font-family: Gugi,sans-serif !important; }
     height: 40px; width: 1027px;
     display: flex; flex-direction: row;
     align-items: center; /* Центрирование текста по вертикали */
-    padding-left: 10px; padding-right: 10px;
+    padding-left: 15px; padding-right: 10px;
 }
 .date-event-details { color: rgb(37, 37, 37, 0.25); }
 .event-info-event-details {
     display: flex; flex-direction: row; justify-content: space-between; width: 1007px;
 }
 .description-event-details {
-    padding-right: 10px;; padding-left: 10px;
+    padding-right: 10px; 
 }
 .centered-text-btn-event-details {
     color: #FFFFFF;

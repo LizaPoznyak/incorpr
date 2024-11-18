@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'; 
+import axios from 'axios'; 
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/edit-profile.css';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
@@ -8,16 +8,33 @@ import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/template
 import Avatar from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/avatar 1.png';
 
 const EditProfile = () => {
-    const [username, setUsername] = useState('TechGuru42');
-    const [position, setPosition] = useState('Главный технический директор');
+    
+    const { id } = useParams();
+    const [username, setUsername] = useState('');
+    const [position, setPosition] = useState('');
     const [avatar, setAvatar] = useState(Avatar);
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/staff/${id}/edit`);
+                const userData = response.data;
+                setUsername(userData.username);
+                setPosition(userData.position);
+                setAvatar(userData.avatarUrl || Avatar);
+            } catch (err) {
+                setError('Ошибка при загрузке данных пользователя');
+            }
+        };
+        fetchUserData();
+    }, [id]);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setFile(file);
-
         const reader = new FileReader();
         reader.onloadend = () => {
             setAvatar(reader.result);
@@ -33,14 +50,15 @@ const EditProfile = () => {
         if (file) {
             formData.append('avatar', file);
         }
-        
         try {
-            await axios.post('/sign-up', formData, {
+            const response = await axios.post(`http://localhost:8080/staff/${id}/edit`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            // Redirect to profile page or show success message
+            if (response.status === 200) {
+                navigate(`/staff/${id}`);
+            }
         } catch (err) {
             setError('Ошибка при обновлении профиля. Попробуйте еще раз.');
         }

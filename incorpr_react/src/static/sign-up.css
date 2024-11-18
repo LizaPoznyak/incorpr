@@ -58,7 +58,7 @@
             padding: 50px 80px;
         }
         .form-control-sign-up {
-            background: #f8f8f8; border: 1px solid #dbdbdb; border-radius: 0 !important; width: 350px; height: 40px; padding-left: 10px !important; }
+            background: #f8f8f8; border: 1px solid #dbdbdb; border-radius: 0 !important; width: 350px; height: 40px; padding-left: 10px !important; padding-right: 10px !important; }
         .form-control-sign-up::placeholder { color: #7b7b7b; }
         .btn-custom-sign-up { color: #ffffff; background-color: #252525;
             border: none; border-radius: 2px; width: 175px; height: 35px; 

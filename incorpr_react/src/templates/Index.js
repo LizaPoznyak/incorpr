@@ -13,11 +13,6 @@ import Avatar4 from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/ava
 
 const Index = () => {
 
-    const loadMain = async () => {
-        const main = await axios.get("http://localhost:8080/");
-        setMain(main.data);
-    }
-
     return (
         <div class="body">
             <Header />

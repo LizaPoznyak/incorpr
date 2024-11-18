@@ -21,6 +21,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin
 public class SignUpController extends Main {
 
     @Autowired

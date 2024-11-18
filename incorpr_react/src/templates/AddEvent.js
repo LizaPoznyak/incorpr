@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/add-event.css';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
@@ -10,13 +10,35 @@ const AddEvent = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
-    const [date, setDate] = useState('');
+    const [dateTime, setDateTime] = useState('');
+    const [types, setTypes] = useState([]);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchTypes = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/events/types');
+                setTypes(response.data);
+            } catch (err) {
+                setError('Ошибка при загрузке типов мероприятий. Попробуйте еще раз.');
+            }
+        };
+
+        fetchTypes();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/events/add', { title, description, type, date });
+            const response = await axios.post('http://localhost:8080/events/add', { title, description, type, dateTime }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.status === 201) {
+                navigate('/events');
+            }
         } catch (err) {
             setError('Ошибка при добавлении мероприятия. Попробуйте еще раз.');
         }
@@ -57,51 +79,33 @@ const AddEvent = () => {
                             <fieldset>
                                 <legend>Тип мероприятия</legend>
                                 <div className="radio-group-add-event">
-                                    <label className="radio-add-event">
-                                        <input
-                                            type="radio"
-                                            name="type"
-                                            value="Хакатон"
-                                            required
-                                            checked={type === 'Хакатон'}
-                                            onChange={(e) => setType(e.target.value)}
-                                        /> Хакатон
-                                    </label>
-                                    <label className="radio-add-event">
-                                        <input
-                                            type="radio"
-                                            name="type"
-                                            value="IT-конференция"
-                                            required
-                                            checked={type === 'IT-конференция'}
-                                            onChange={(e) => setType(e.target.value)}
-                                        /> IT-конференция
-                                    </label>
-                                    <label className="radio-add-event">
-                                        <input
-                                            type="radio"
-                                            name="type"
-                                            value="Вебинар"
-                                            required
-                                            checked={type === 'Вебинар'}
-                                            onChange={(e) => setType(e.target.value)}
-                                        /> Вебинар
-                                    </label>
+                                    {types.map((eventType) => (
+                                        <label key={eventType} className="radio-add-event">
+                                            <input
+                                                type="radio"
+                                                name="type"
+                                                value={eventType}
+                                                required
+                                                checked={type === eventType}
+                                                onChange={(e) => setType(e.target.value)}
+                                            /> {eventType}
+                                        </label>
+                                    ))}
                                 </div>
                             </fieldset>
                             <label className="label-add-event">
                                 Дата и время
                                 <input
                                     type="datetime-local"
-                                    name="date"
+                                    name="dateTime"
                                     className="form-control-add-event datetime-add-event"
                                     required
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
+                                    value={dateTime}
+                                    onChange={(e) => setDateTime(e.target.value)}
                                 />
                             </label>
                         </div>
-                        <Link to="/events" className="abtn centered-text-btn-add-event">Сохранить</Link>
+                        <button type="submit" className="abtn centered-text-btn-add-event">Сохранить</button>
                     </form>
                     {error && <p>{error}</p>}
                 </div>

@@ -1,27 +1,50 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'; 
+import axios from 'axios'; 
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/edit-event.css';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
 import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/footer';
 
 const EditEvent = () => {
-    const [title, setTitle] = useState('TechQuest: Новые горизонты киберпространства');
-    const [description, setDescription] = useState('Хакатон TechQuest: Новые горизонты киберпространства - это уникальная возможность для разработчиков, инженеров и технологов собраться и создать инновационные решения, которые смогут изменить мир. В рамках этого события, участники будут соревноваться в создании программного обеспечения, разработке новых технологий и решений в области кибербезопасности, искусственного интеллекта и интернета вещей. Главная цель хакатона — открыть новые горизонты в сфере IT и продемонстрировать мощь коллективного интеллекта и инноваций. Присоединяйтесь к нам и станьте частью будущего технологий!');
-    const [type, setType] = useState('Хакатон');
-    const [date, setDate] = useState('2024-10-21T13:30');
+    
+    const { id } = useParams();
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [type, setType] = useState('');
+    const [dateTime, setDateTime] = useState('');
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchEventData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/events/${id}/edit`);
+                const eventData = response.data;
+                setTitle(eventData.title);
+                setDescription(eventData.description);
+                setType(eventData.type);
+                setDateTime(eventData.dateTime);
+            } catch (err) {
+                setError('Ошибка при загрузке данных мероприятия. Попробуйте еще раз.');
+            }
+        };
+
+        fetchEventData();
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/events/edit', { title, description, type, date });
+            const response = await axios.post(`http://localhost:8080/events/${id}/edit`, { title, description, type, dateTime });
+            if (response.status === 200) {
+                navigate(`/events/${id}`);
+            }
         } catch (err) {
             setError('Ошибка при редактировании мероприятия. Попробуйте еще раз.');
         }
     };
-
+    
     return (
         <div className="body">
             <Header />
@@ -93,11 +116,11 @@ const EditEvent = () => {
                                 Дата и время
                                 <input
                                     type="datetime-local"
-                                    name="date"
+                                    name="dateTime"
                                     className="form-control-add-event datetime-add-event"
                                     required
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
+                                    value={dateTime}
+                                    onChange={(e) => setDateTime(e.target.value)}
                                 />
                             </label>
                         </div>

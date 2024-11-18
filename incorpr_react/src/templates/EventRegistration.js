@@ -8,7 +8,7 @@ import Avatar1 from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/ava
 import Avatar2 from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/avatar 2.png';
 
 const EventRegistration = () => { 
-    return (
+    return ( 
         <div class="body-staff">
             <Header />
             <main className="container-staff">

@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/staff")
+@CrossOrigin
 public class StaffController extends Main {
 
     @Autowired
