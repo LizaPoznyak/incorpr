@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/main.css';
@@ -11,6 +12,11 @@ import Avatar3 from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/ava
 import Avatar4 from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/avatar 4.png';
 
 const Index = () => {
+
+    const loadMain = async () => {
+        const main = await axios.get("http://localhost:8080/");
+        setMain(main.data);
+    }
 
     return (
         <div class="body">
