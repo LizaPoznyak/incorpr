@@ -23,27 +23,37 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "username")
     @Size(min = 4, max = 25)
     private String username;
 
+    @Column(name = "password")
     @Size(min = 4, max = 25)
     private String password;
 
+    @Column(name = "position")
     @Size(min = 3, max = 150)
     private String position;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
     Set<EventRegistration> registrations;
 
-    public User(String username, String password, Role role) {
+    public User(String username, String password, String position, String avatarUrl, Role role) {
         this.username = username;
         this.password = passwordEncoder().encode(password);
+        this.position = position;
+        this.avatarUrl = avatarUrl;
         this.role = role;
     }
 

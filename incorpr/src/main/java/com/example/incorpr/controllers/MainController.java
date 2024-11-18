@@ -11,7 +11,7 @@ public class MainController extends Main {
 
     @GetMapping("/")
     public String mainPage() {
-        return "{\"role\": \"" + getRole() + "\", \"user\": \"" + getUser() + "\"}";
+        return "Main page uploaded";
     }
 
 }

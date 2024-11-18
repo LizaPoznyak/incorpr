@@ -48,17 +48,19 @@ public class StaffController extends Main {
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity<String> editProfilePost(@PathVariable(value = "id") Long id, @RequestParam String username) {
+    public ResponseEntity<String> editProfilePost(@PathVariable(value = "id") Long id, @RequestParam String username, @RequestParam String position, @RequestParam String avatarUrl) {
         User user = usersRepository.findById(id).orElseThrow();
         if (!user.getUsername().equals(username)) {
             User existingUser = usersRepository.findByUsername(username);
             if (existingUser != null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Пожалуйста, введите уникальный логин.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique username");
             }
         }
         user.setUsername(username);
+        user.setPosition(position);
+        user.setAvatarUrl(avatarUrl);
         usersRepository.save(user);
-        return ResponseEntity.ok("User updated successfully.");
+        return ResponseEntity.ok("User was updated");
     }
 
     @PostMapping("/{id}/delete")
@@ -67,7 +69,7 @@ public class StaffController extends Main {
         List<EventRegistration> userRegistrations = eventRegistrationRepository.findByUser(user);
         eventRegistrationRepository.deleteAll(userRegistrations);
         usersRepository.delete(user);
-        return ResponseEntity.ok("User deleted successfully.");
+        return ResponseEntity.ok("User was deleted");
     }
 
 }

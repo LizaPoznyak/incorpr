@@ -17,6 +17,8 @@ public class SignInController extends Main {
     @GetMapping("/sign-in")
     public ResponseEntity<Map<String, String>> signIn() {
         Map<String, String> response = new HashMap<>();
+        response.put("message", "User logged");
+        response.put("userId", getUserId());
         response.put("role", getRole());
         return ResponseEntity.ok(response);
     }

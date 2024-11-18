@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,22 +45,22 @@ public class EventsController extends Main {
 
     @GetMapping("/add")
     public ResponseEntity<String> addEvent() {
-        return ResponseEntity.ok("Add event endpoint");
+        return ResponseEntity.ok("Add event page uploaded");
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addEventPost(@RequestParam String title, @RequestParam String description, @RequestParam String type, @RequestParam Date date) {
+    public ResponseEntity<String> addEventPost(@RequestParam String title, @RequestParam String description, @RequestParam String type, @RequestParam LocalDateTime dateTime) {
         Event existingEvent = eventsRepository.findByTitle(title);
         if (existingEvent != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Пожалуйста, введите уникальное название.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique title");
         }
-        Date currentDate = new Date(System.currentTimeMillis());
-        if (date.before(currentDate)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пожалуйста, выберите будущую дату.");
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (dateTime.isBefore(currentDate)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose future date");
         }
-        Event event = new Event(title, type, description, date);
+        Event event = new Event(title, type, description, dateTime);
         eventsRepository.save(event);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Event created successfully.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Event was added");
     }
 
     @GetMapping("/{id}")
@@ -82,26 +82,26 @@ public class EventsController extends Main {
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity<String> editEventPost(@PathVariable(value = "id") Long id, @RequestParam String title, @RequestParam String description, @RequestParam String type, @RequestParam Date date) {
+    public ResponseEntity<String> editEventPost(@PathVariable(value = "id") Long id, @RequestParam String title, @RequestParam String description, @RequestParam String type, @RequestParam LocalDateTime dateTime) {
         Event event = eventsRepository.findById(id).orElseThrow();
         if (!event.getTitle().equals(title)) {
             Event existingEvent = eventsRepository.findByTitle(title);
             if (existingEvent != null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Пожалуйста, введите уникальное название.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique title");
             }
         }
-        if (!event.getDate().equals(date)) {
-            Date currentDate = new Date(System.currentTimeMillis());
-            if (date.before(currentDate)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пожалуйста, выберите будущую дату.");
+        if (!event.getDateTime().equals(dateTime)) {
+            LocalDateTime currentDate = LocalDateTime.now();
+            if (dateTime.isBefore(currentDate)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose future date");
             }
         }
         event.setTitle(title);
         event.setDescription(description);
         event.setType(type);
-        event.setDate(date);
+        event.setDateTime(dateTime);
         eventsRepository.save(event);
-        return ResponseEntity.ok("Event updated successfully.");
+        return ResponseEntity.ok("Event was updated");
     }
 
     @PostMapping("/{id}/delete")
@@ -110,7 +110,7 @@ public class EventsController extends Main {
         List<EventRegistration> registrations = eventRegistrationRepository.findByEvent(event);
         eventRegistrationRepository.deleteAll(registrations);
         eventsRepository.delete(event);
-        return ResponseEntity.ok("Event deleted successfully.");
+        return ResponseEntity.ok("Event was deleted");
     }
 
     @PostMapping("/{id}/register")
@@ -124,7 +124,7 @@ public class EventsController extends Main {
                 eventRegistrationRepository.save(eventRegistration);
             }
         }
-        return ResponseEntity.ok("User registered for event successfully.");
+        return ResponseEntity.ok("User registered for event");
     }
 
     @PostMapping("/{id}/cancel-registration")
@@ -135,7 +135,7 @@ public class EventsController extends Main {
         if (existingRegistration != null) {
             eventRegistrationRepository.delete(existingRegistration);
         }
-        return ResponseEntity.ok("User registration cancelled successfully.");
+        return ResponseEntity.ok("User registration was cancelled");
     }
 
     @GetMapping("/{id}/users")
@@ -161,13 +161,16 @@ public class EventsController extends Main {
         PdfPTable table = new PdfPTable(2);
         table.addCell("Id");
         table.addCell("Username");
+        table.addCell("Position");
         List<EventRegistration> eventRegistrations = eventRegistrationRepository.findByEvent(event);
         for (EventRegistration registration : eventRegistrations) {
             User user = registration.getUser();
             String userId = String.valueOf(user.getId());
             String userName = user.getUsername();
+            String userPosition = user.getPosition();
             table.addCell(userId);
             table.addCell(userName);
+            table.addCell(userPosition);
         }
         document.add(table);
         document.add(new Paragraph("\n"));
