@@ -57,6 +57,16 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
     protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }

@@ -14,16 +14,27 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("data: ", username, password);
         try {
-            const response = await axios.post('http://localhost:8080/sign-in', { username, password });
+            const response = await axios.post('http://localhost:8080/auth/sign-in', {
+                username: username,
+                password: password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response.data)
             setMessage(response.data.message);
             if (response.data.userId) {
                 navigate('/');
             }
         } catch (error) {
+            console.error("Error during sign-in request:", error);
             setMessage('Login failed');
         }
     };
+    
 
     return (
         <div>

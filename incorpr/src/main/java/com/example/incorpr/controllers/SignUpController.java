@@ -1,10 +1,10 @@
 package com.example.incorpr.controllers;
 
-import com.example.incorpr.controllers.main.Main;
 import com.example.incorpr.models.User;
 import com.example.incorpr.models.enums.Role;
 import com.example.incorpr.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -20,17 +20,15 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/auth")
 @CrossOrigin
-public class SignUpController extends Main {
+public class SignUpController {
 
     @Autowired
     private UsersRepository usersRepository;
 
-    @GetMapping("/sign-up")
-    public String signUp() {
-        return "Sign up page uploaded";
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/sign-up")
     public ResponseEntity<Map<String, String>> signUpPost(
@@ -43,31 +41,27 @@ public class SignUpController extends Main {
         Map<String, String> response = new HashMap<>();
 
         if (!Objects.equals(password, confirmPassword)) {
-            response.put("message", "Enter a right password");
+            response.put("message", "Passwords do not match");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 
-        if (usersRepository.findAll().size() == 0 || usersRepository.findAll().isEmpty()) {
-            String avatarUrl = saveAvatar(avatar);
-            usersRepository.save(new User(username, password, position, avatarUrl, Role.ADMIN));
-            response.put("message", "User registered as ADMIN");
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }
-
-        User userFromDB = usersRepository.findByUsername(username);
-        if (userFromDB != null) {
-            response.put("message", "Enter a unique username");
+        if (usersRepository.findByUsername(username) != null) {
+            response.put("message", "Username already exists");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 
         String avatarUrl = saveAvatar(avatar);
-        usersRepository.save(new User(username, password, position, avatarUrl, Role.USER));
+        String encodedPassword = passwordEncoder.encode(password);
+
+        User user = new User(username, encodedPassword, position, avatarUrl, Role.USER);
+        usersRepository.save(user);
+
         response.put("message", "User registered successfully");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     private String saveAvatar(MultipartFile avatar) {
-        String uploadDir = "uploads/avatars/";
+        String uploadDir = "src/main/resources/static/uploads/avatars/";
         File directory = new File(uploadDir);
         if (!directory.exists()) {
             directory.mkdirs();
@@ -82,5 +76,4 @@ public class SignUpController extends Main {
         }
         return "/uploads/avatars/" + fileName;
     }
-
 }

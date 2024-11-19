@@ -18,7 +18,7 @@ function App() {
         <Router> 
             <Routes> 
                 <Route path="/" element={<Index />} /> 
-                <Route path="/sign-up" element={<SignUp />} /> 
+                <Route path="/auth/sign-up" element={<SignUp />} /> 
                 <Route path="/staff/:id" element={<Profile />} /> 
                 <Route path="/staff" element={<Staff />} /> 
                 <Route path="/events" element={<Events />} /> 
@@ -27,7 +27,7 @@ function App() {
                 <Route path="/staff/:id/edit" element={<EditProfile />} /> 
                 <Route path="/events/:id" element={<EventDetails />} /> 
                 <Route path="/events/:id/users" element={<EventRegistration />} /> 
-                <Route path="/api/sign-in" element={<SignIn />} />
+                <Route path="/auth/sign-in" element={<SignIn />} />
             </Routes> 
         </Router>
     );

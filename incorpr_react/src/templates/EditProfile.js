@@ -5,14 +5,13 @@ import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/edit-profile.
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
 import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/footer';
-import Avatar from 'C:/Users/admin/incorpr repository/incorpr_react/src/img/avatar 1.png';
 
 const EditProfile = () => {
     
     const { id } = useParams();
     const [username, setUsername] = useState('');
     const [position, setPosition] = useState('');
-    const [avatar, setAvatar] = useState(Avatar);
+    const [avatar, setAvatar] = useState('');
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -20,11 +19,11 @@ const EditProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/staff/${id}/edit`);
+                const response = await axios.get(`http://localhost:8080/api/users/${id}/edit`);
                 const userData = response.data;
                 setUsername(userData.username);
                 setPosition(userData.position);
-                setAvatar(userData.avatarUrl || Avatar);
+                setAvatar(`http://localhost:8080${userData.avatarUrl}`);
             } catch (err) {
                 setError('Ошибка при загрузке данных пользователя');
             }
@@ -51,7 +50,7 @@ const EditProfile = () => {
             formData.append('avatar', file);
         }
         try {
-            const response = await axios.post(`http://localhost:8080/staff/${id}/edit`, formData, {
+            const response = await axios.post(`http://localhost:8080/api/users/${id}/edit`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -65,7 +64,7 @@ const EditProfile = () => {
     };
 
     return (
-        <div class="body">
+        <div className="body">
             <Header />
             <main className="main-container-edit-profile">
                 <div className="head-edit-profile">
@@ -78,7 +77,7 @@ const EditProfile = () => {
                                 <label>
                                     <img id="avatar-preview-edit-profile" src={avatar} alt="avatar" onClick={() => document.getElementById('avatar-input').click()} />
                                     <div className="plus-icon-edit-profile">+</div>
-                                    <input type="file" id="avatar-inputv" name="avatar" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
+                                    <input type="file" id="avatar-input" name="avatar" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
                                 </label>
                             </div>
                         </div>
@@ -107,7 +106,7 @@ const EditProfile = () => {
                             </label>
                         </div>
                     </div>
-                    <Link to="/staff/id" className="abtn centered-text-btn-edit-profile">Сохранить</Link>
+                    <button type="submit" className="abtn centered-text-btn-edit-profile">Сохранить</button>
                 </form>
                 {error && <p>{error}</p>}
             </main>

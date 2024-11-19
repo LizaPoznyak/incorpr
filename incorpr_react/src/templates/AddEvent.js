@@ -37,7 +37,7 @@ const AddEvent = () => {
                 }
             });
             if (response.status === 201) {
-                navigate('/events');
+                navigate('/events/all');
             }
         } catch (err) {
             setError('Ошибка при добавлении мероприятия. Попробуйте еще раз.');

@@ -49,7 +49,7 @@ public class EventsController extends Main {
     @GetMapping("/popular")
     public ResponseEntity<List<Event>> getPopularEvents() {
         List<Event> events = eventsRepository.findAll();
-        List<Event> popularEvents = events.stream() .sorted((e1, e2) -> {
+        List<Event> popularEvents = events.stream().sorted((e1, e2) -> {
             int compare = Integer.compare(e2.getRegistrations().size(), e1.getRegistrations().size());
             if (compare == 0) {
                 return e2.getDateTime().compareTo(e1.getDateTime());
@@ -57,7 +57,8 @@ public class EventsController extends Main {
             return compare; })
                 .limit(5)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(popularEvents); }
+        return ResponseEntity.ok(popularEvents);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Event>> events() {

@@ -26,7 +26,7 @@ const SignUp = () => {
         formData.append('position', position);
         formData.append('avatar', avatar);
         try {
-            const response = await axios.post('http://localhost:8080/sign-up', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+            const response = await axios.post('http://localhost:8080/auth/sign-up', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
             setMessage(response.data.message);
             if (response.status === 201) {
                 navigate('/sign-in');
