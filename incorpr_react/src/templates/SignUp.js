@@ -29,7 +29,7 @@ const SignUp = () => {
             const response = await axios.post('http://localhost:8080/auth/sign-up', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
             setMessage(response.data.message);
             if (response.status === 201) {
-                navigate('/sign-in');
+                navigate('/auth/sign-in');
             }
         } catch (error) {
             setMessage('Registration failed');

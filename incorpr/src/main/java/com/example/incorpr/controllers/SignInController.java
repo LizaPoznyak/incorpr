@@ -3,21 +3,20 @@ package com.example.incorpr.controllers;
 import com.example.incorpr.models.User;
 import com.example.incorpr.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust if your frontend runs on a different port
+@CrossOrigin(origins = "http://localhost:3000") // Adjust the origin to match your frontend's URL and port
 public class SignInController {
 
     @Autowired
@@ -38,21 +37,23 @@ public class SignInController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             User user_check = usersRepository.findByUsername(user.getUsername());
-            if (user_check != null && passwordEncoder.matches(user.getPassword(), user_check.getPassword())) {
+            if (user_check != null) {
                 response.put("message", "User logged in successfully");
                 response.put("userId", String.valueOf(user_check.getId()));
-                response.put("role", user_check.getRole().toString());
+                // Include other user details as needed
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Invalid username or password");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
+        } catch (BadCredentialsException e) {
+            response.put("message", "Invalid username or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         } catch (Exception e) {
             response.put("message", "Authentication error");
             response.put("error", e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
 }

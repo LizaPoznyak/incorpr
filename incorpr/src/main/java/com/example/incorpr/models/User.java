@@ -1,6 +1,7 @@
 package com.example.incorpr.models;
 
 import com.example.incorpr.models.enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,21 +28,26 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("username")
     @Column(name = "username")
     @Size(min = 4, max = 25)
     private String username;
 
+    @JsonProperty("password")
     @Column(name = "password")
     @Size(min = 4, max = 25)
     private String password;
 
+    @JsonProperty("position")
     @Column(name = "position")
     @Size(min = 3, max = 150)
     private String position;
 
+    @JsonProperty("avatar_url")
     @Column(name = "avatar_url")
     private String avatarUrl;
 
+    @JsonProperty("role")
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;

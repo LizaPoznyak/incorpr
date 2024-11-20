@@ -36,7 +36,7 @@ public class SignUpController {
             @RequestParam String password,
             @RequestParam String confirmPassword,
             @RequestParam String position,
-            @RequestParam("avatar") MultipartFile avatar) {
+            @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
 
         Map<String, String> response = new HashMap<>();
 
@@ -50,7 +50,7 @@ public class SignUpController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 
-        String avatarUrl = saveAvatar(avatar);
+        String avatarUrl = (avatar != null && !avatar.isEmpty()) ? saveAvatar(avatar) : "/uploads/avatars/default avatar.jpg";
         String encodedPassword = passwordEncoder.encode(password);
 
         User user = new User(username, encodedPassword, position, avatarUrl, Role.USER);

@@ -1,5 +1,6 @@
 package com.example.incorpr.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,15 +21,19 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("title")
     @Column(name = "title")
     private String title;
 
+    @JsonProperty("type")
     @Column(name = "type")
     private String type;
 
+    @JsonProperty("description")
     @Column(name = "description", length = 5000)
     private String description;
 
+    @JsonProperty("date_time")
     @Column(name = "date_time")
     @Future
     private LocalDateTime dateTime;

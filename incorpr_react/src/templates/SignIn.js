@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/sign-in.css';
-import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
-import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
-import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/footer';
+import '../static/sign-in.css';
+import '../static/index.css';
+import Header from '../templates/blocks/header';
+import Footer from '../templates/blocks/footer';
 
 const SignIn = () => {
     const [username, setUsername] = useState('');
@@ -24,17 +24,21 @@ const SignIn = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response.data)
+            console.log(response.data);
             setMessage(response.data.message);
             if (response.data.userId) {
+                // You can store user info in localStorage or context if needed
                 navigate('/');
             }
         } catch (error) {
             console.error("Error during sign-in request:", error);
-            setMessage('Login failed');
+            if (error.response && error.response.data && error.response.data.message) {
+                setMessage(error.response.data.message);
+            } else {
+                setMessage('Login failed');
+            }
         }
     };
-    
 
     return (
         <div>
@@ -56,7 +60,7 @@ const SignIn = () => {
                         <button type="submit" className="abtn btn-custom-sign-in">Войти</button>
                     </form>
                     <div className="mt-3-sign-in link-sign-in">
-                        <Link to="/sign-up" className="sign-up-link-sign-in">Зарегистрироваться</Link>
+                        <Link to="/auth/sign-up" className="sign-up-link-sign-in">Зарегистрироваться</Link>
                     </div>
                     {message && <p>{message}</p>}
                 </div>

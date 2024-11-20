@@ -41,6 +41,7 @@ public class MainController extends Main {
                 })
                 .limit(5)
                 .collect(Collectors.toList());
+        System.out.println("Webinars: " + webinars);
         return ResponseEntity.ok(webinars);
     }
 
@@ -57,6 +58,7 @@ public class MainController extends Main {
                 })
                 .limit(5)
                 .collect(Collectors.toList());
+        System.out.println("Hackathons: " + hackathons);
         return ResponseEntity.ok(hackathons);
     }
 
@@ -73,12 +75,15 @@ public class MainController extends Main {
                 })
                 .limit(5)
                 .collect(Collectors.toList());
+        System.out.println("Conferences: " + conferences);
         return ResponseEntity.ok(conferences);
     }
 
     @GetMapping("/staff")
     public ResponseEntity<List<User>> getStaff() {
         List<User> staff = usersRepository.findAll();
+        System.out.println("Staff: " + staff);
         return ResponseEntity.ok(staff);
     }
+
 }

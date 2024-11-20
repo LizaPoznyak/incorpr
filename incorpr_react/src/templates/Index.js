@@ -21,23 +21,29 @@ const Index = () => {
         const fetchData = async () => {
             try {
                 const webinarsResponse = await axios.get('http://localhost:8080/webinars');
+                console.log("Webinars: ", webinarsResponse.data);
                 setWebinars(webinarsResponse.data);
-                
+    
                 const hackathonsResponse = await axios.get('http://localhost:8080/hackathons');
+                console.log("Hackathons: ", hackathonsResponse.data);
                 setHackathons(hackathonsResponse.data);
-
+    
                 const conferencesResponse = await axios.get('http://localhost:8080/conferences');
+                console.log("Conferences: ", conferencesResponse.data);
                 setConferences(conferencesResponse.data);
-
+    
                 const staffResponse = await axios.get('http://localhost:8080/staff');
+                console.log("Staff: ", staffResponse.data);
                 setStaff(staffResponse.data);
             } catch (err) {
+                console.error("Error fetching data: ", err);
                 setError('Ошибка при загрузке данных. Попробуйте еще раз.');
             }
         };
-
+    
         fetchData();
     }, []);
+    
 
     return (
         <div className="body">
