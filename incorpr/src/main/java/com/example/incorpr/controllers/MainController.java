@@ -31,14 +31,8 @@ public class MainController extends Main {
     @GetMapping("/webinars")
     public ResponseEntity<List<Event>> getWebinars() {
         List<Event> webinars = eventsRepository.findAll().stream()
-                .filter(event -> event.getType().equalsIgnoreCase("webinar"))
-                .sorted((e1, e2) -> {
-                    int compare = Integer.compare(e2.getRegistrations().size(), e1.getRegistrations().size());
-                    if (compare == 0) {
-                        return e2.getDateTime().compareTo(e1.getDateTime());
-                    }
-                    return compare;
-                })
+                .filter(event -> event.getType().equalsIgnoreCase("Вебинар"))
+                .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(5)
                 .collect(Collectors.toList());
         System.out.println("Webinars: " + webinars);
@@ -48,14 +42,8 @@ public class MainController extends Main {
     @GetMapping("/hackathons")
     public ResponseEntity<List<Event>> getHackathons() {
         List<Event> hackathons = eventsRepository.findAll().stream()
-                .filter(event -> event.getType().equalsIgnoreCase("hackathon"))
-                .sorted((e1, e2) -> {
-                    int compare = Integer.compare(e2.getRegistrations().size(), e1.getRegistrations().size());
-                    if (compare == 0) {
-                        return e2.getDateTime().compareTo(e1.getDateTime());
-                    }
-                    return compare;
-                })
+                .filter(event -> event.getType().equalsIgnoreCase("Хакатон"))
+                .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(5)
                 .collect(Collectors.toList());
         System.out.println("Hackathons: " + hackathons);
@@ -65,14 +53,8 @@ public class MainController extends Main {
     @GetMapping("/conferences")
     public ResponseEntity<List<Event>> getConferences() {
         List<Event> conferences = eventsRepository.findAll().stream()
-                .filter(event -> event.getType().equalsIgnoreCase("conference"))
-                .sorted((e1, e2) -> {
-                    int compare = Integer.compare(e2.getRegistrations().size(), e1.getRegistrations().size());
-                    if (compare == 0) {
-                        return e2.getDateTime().compareTo(e1.getDateTime());
-                    }
-                    return compare;
-                })
+                .filter(event -> event.getType().equalsIgnoreCase("Конференция"))
+                .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(5)
                 .collect(Collectors.toList());
         System.out.println("Conferences: " + conferences);
@@ -81,8 +63,11 @@ public class MainController extends Main {
 
     @GetMapping("/staff")
     public ResponseEntity<List<User>> getStaff() {
-        List<User> staff = usersRepository.findAll();
-        System.out.println("Staff: " + staff);
+        List<User> staff = usersRepository.findAll().stream()
+                .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
+                .limit(4)
+                .collect(Collectors.toList());
+        staff.forEach(user -> System.out.println("User: " + user.getUsername() + ", Avatar URL: " + user.getAvatarUrl()));
         return ResponseEntity.ok(staff);
     }
 

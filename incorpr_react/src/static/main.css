@@ -4,6 +4,9 @@
     width: 1240px !important;
     border: none !important;
 }
+.cursor-none {
+    cursor: none;
+}
 .sections {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -18,6 +21,10 @@
 }
 p { font-size: 14px; font-family: Gugi,sans-serif !important; }
 h2 { font-size: 15px; }
+.link-index {
+    text-decoration: none;
+    color: #252525;
+}
 .head {
     background-color: #252525; color: #FFFFFF;
     height: 45px !important; padding-top: 20px !important; padding-bottom: 15px !important; width: 500px !important;

@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust the origin to match your frontend's URL and port
+@CrossOrigin(origins = "http://localhost:3000")
 public class SignInController {
 
     @Autowired
@@ -40,7 +40,6 @@ public class SignInController {
             if (user_check != null) {
                 response.put("message", "User logged in successfully");
                 response.put("userId", String.valueOf(user_check.getId()));
-                // Include other user details as needed
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Invalid username or password");
