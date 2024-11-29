@@ -10,7 +10,7 @@ const AddEvent = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
-    const [dateTime, setDateTime] = useState('');
+    const [date_time, setDateTime] = useState('');
     const [types, setTypes] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AddEvent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/events/add', { title, description, type, dateTime }, {
+            const response = await axios.post('http://localhost:8080/events/add', { title, description, type, date_time }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -100,7 +100,7 @@ const AddEvent = () => {
                                     name="dateTime"
                                     className="form-control-add-event datetime-add-event"
                                     required
-                                    value={dateTime}
+                                    value={date_time}
                                     onChange={(e) => setDateTime(e.target.value)}
                                 />
                             </label>

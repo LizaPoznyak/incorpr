@@ -19,7 +19,7 @@ h2 { font-size: 16px; font-family: Gugi,sans-serif !important; }
 .head-staff {
     background-color: #252525; color: #FFFFFF;
     height: 40px; width: 1027px;
-    padding-left: 60px;
+    padding-left: 45px;
     display: flex; flex-direction: row;
     align-items: center; /* Центрирование текста по вертикали */
 }

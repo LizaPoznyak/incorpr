@@ -36,10 +36,11 @@ public class SignInController {
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            User user_check = usersRepository.findByUsername(user.getUsername());
-            if (user_check != null) {
+            User userCheck = usersRepository.findByUsername(user.getUsername());
+            if (userCheck != null) {
                 response.put("message", "User logged in successfully");
-                response.put("userId", String.valueOf(user_check.getId()));
+                response.put("userId", String.valueOf(userCheck.getId()));
+                response.put("role", userCheck.getRole().toString());
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Invalid username or password");
@@ -55,4 +56,5 @@ public class SignInController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
 }

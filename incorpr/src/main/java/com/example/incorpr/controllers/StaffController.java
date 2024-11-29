@@ -6,11 +6,15 @@ import com.example.incorpr.models.User;
 import com.example.incorpr.repositories.EventRegistrationRepository;
 import com.example.incorpr.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +27,29 @@ public class StaffController extends Main {
 
     @Autowired
     public EventRegistrationRepository eventRegistrationRepository;
+
+    @GetMapping("/getUserDetails")
+    public ResponseEntity<Map<String, String>> getUserDetails() {
+        User user = getUser(); // Метод получения текущего пользователя
+        Map<String, String> userDetails = new HashMap<>();
+        if (user == null) {
+            userDetails.put("role", "NOT");
+            userDetails.put("id", "0"); // Или другой идентификатор для неавторизованных пользователей
+        } else {
+            userDetails.put("role", user.getRole().toString());
+            userDetails.put("id", user.getId().toString());
+        }
+        return ResponseEntity.ok(userDetails);
+    }
+
+    public User getUser() { // Логика получения текущего аутентифицированного пользователя // Например, используя Spring Security:
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+        String username = authentication.getName();
+        return usersRepository.findByUsername(username);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> staff() {
@@ -49,8 +76,11 @@ public class StaffController extends Main {
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity<String> editProfilePost(@PathVariable(value = "id") Long id, @RequestParam String username, @RequestParam String position, @RequestParam String avatarUrl) {
-        User user = usersRepository.findById(id).orElseThrow();
+    public ResponseEntity<String> editProfilePost(@RequestBody User user) { //(@PathVariable(value = "id") Long id, @RequestParam String username, @RequestParam String position, @RequestParam String avatarUrl) {
+        //User user = usersRepository.findById(id).orElseThrow();
+        String username = user.getUsername();
+        String position = user.getPosition();
+        String avatarUrl = user.getAvatarUrl();
         if (!user.getUsername().equals(username)) {
             User existingUser = usersRepository.findByUsername(username);
             if (existingUser != null) {

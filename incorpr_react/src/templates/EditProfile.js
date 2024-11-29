@@ -19,11 +19,11 @@ const EditProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/users/${id}/edit`);
+                const response = await axios.get(`http://localhost:8080/staff/${id}/edit`);
                 const userData = response.data;
                 setUsername(userData.username);
                 setPosition(userData.position);
-                setAvatar(`http://localhost:8080${userData.avatarUrl}`);
+                setAvatar(`http://localhost:8080${userData.avatar_url}`);
             } catch (err) {
                 setError('Ошибка при загрузке данных пользователя');
             }
@@ -50,7 +50,11 @@ const EditProfile = () => {
             formData.append('avatar', file);
         }
         try {
-            const response = await axios.post(`http://localhost:8080/api/users/${id}/edit`, formData, {
+            const response = await axios.post(`http://localhost:8080/staff/${id}/edit`, {
+                username: username,
+                position: position,
+                avatar: file
+            }, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

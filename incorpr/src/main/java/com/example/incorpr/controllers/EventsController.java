@@ -164,6 +164,14 @@ public class EventsController extends Main {
         return ResponseEntity.ok("User registration was cancelled");
     }
 
+    @GetMapping("/{id}/isRegistered")
+    public ResponseEntity<Boolean> isUserRegistered(@PathVariable("id") Long eventId, @RequestParam("userId") Long userId) {
+        Event event = eventsRepository.findById(eventId).orElseThrow();
+        User user = usersRepository.findById(userId).orElseThrow();
+        EventRegistration existingRegistration = eventRegistrationRepository.findByUserAndEvent(user, event);
+        return ResponseEntity.ok(existingRegistration != null);
+    }
+
     @GetMapping("/{id}/users")
     public ResponseEntity<List<User>> viewRegisteredUsers(@PathVariable(value = "id") Long id) {
         Event event = eventsRepository.findById(id).orElseThrow();
@@ -187,16 +195,13 @@ public class EventsController extends Main {
         PdfPTable table = new PdfPTable(2);
         table.addCell("Id");
         table.addCell("Username");
-        table.addCell("Position");
         List<EventRegistration> eventRegistrations = eventRegistrationRepository.findByEvent(event);
         for (EventRegistration registration : eventRegistrations) {
             User user = registration.getUser();
             String userId = String.valueOf(user.getId());
             String userName = user.getUsername();
-            String userPosition = user.getPosition();
             table.addCell(userId);
             table.addCell(userName);
-            table.addCell(userPosition);
         }
         document.add(table);
         document.add(new Paragraph("\n"));

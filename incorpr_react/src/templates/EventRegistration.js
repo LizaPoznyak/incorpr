@@ -14,7 +14,7 @@ const EventRegistration = () => {
     useEffect(() => {
         const fetchParticipants = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/events/${id}/users`);
+                const response = await axios.get(`http://localhost:8080/events/${id}/users`);
                 setParticipants(response.data);
             } catch (err) {
                 setError('Ошибка при загрузке данных участников.');
@@ -23,15 +23,6 @@ const EventRegistration = () => {
 
         fetchParticipants();
     }, [id]);
-
-    const handleCancelRegistration = async (userId) => {
-        try {
-            await axios.post(`http://localhost:8080/api/events/${id}/cancel-registration`, { userId });
-            setParticipants(participants.filter(participant => participant.id !== userId));
-        } catch (err) {
-            setError('Ошибка при отмене регистрации.');
-        }
-    };
 
     return (
         <div className="body-staff">
@@ -50,19 +41,13 @@ const EventRegistration = () => {
                         ) : (
                             participants.map((participant) => (
                                 <div className="employee-staff" key={participant.id}>
-                                    <div className="employee-info-staff">
-                                        <img className="avatar-staff" src={`http://localhost:8080${participant.avatarUrl}`} alt={`avatar of ${participant.username}`} />
-                                        <p className="username-staff">{participant.username}</p>
-                                        <p className="position-staff">{participant.position}</p>
-                                    </div>
-                                    <div className="icons-staff">
-                                        <Link className="link-staff">
-                                            <svg onClick={() => handleCancelRegistration(participant.id)} className="delete-icon-staff" width="35" height="37" viewBox="0 0 31 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M25.3546 6.24422H19.9554V5.59839C19.9554 5.08453 19.7513 4.59172 19.3879 4.22837C19.0246 3.86502 18.5317 3.66089 18.0179 3.66089H13.4454C12.9315 3.66089 12.4387 3.86502 12.0754 4.22837C11.712 4.59172 11.5079 5.08453 11.5079 5.59839V6.24422H6.10872C5.93744 6.24422 5.77317 6.31226 5.65205 6.43338C5.53093 6.5545 5.46289 6.71877 5.46289 6.89006C5.46289 7.06134 5.53093 7.22561 5.65205 7.34673C5.77317 7.46785 5.93744 7.53589 6.10872 7.53589H7.03872L7.58122 26.2005C7.60249 27.0419 7.95235 27.8415 8.5559 28.4282C9.15946 29.0148 9.96871 29.3419 10.8104 29.3392H20.6529C21.4946 29.3419 22.3038 29.0148 22.9074 28.4282C23.5109 27.8415 23.8608 27.0419 23.8821 26.2005L24.4246 7.53589H25.3546C25.5258 7.53589 25.6901 7.46785 25.8112 7.34673C25.9323 7.22561 26.0004 7.06134 26.0004 6.89006C26.0004 6.71877 25.9323 6.5545 25.8112 6.43338C25.6901 6.31226 25.5258 6.24422 25.3546 6.24422ZM12.7996 5.59839C12.7996 5.4271 12.8676 5.26283 12.9887 5.14172C13.1098 5.0206 13.2741 4.95256 13.4454 4.95256H18.0179C18.1892 4.95256 18.3534 5.0206 18.4746 5.14172C18.5957 5.26283 18.6637 5.4271 18.6637 5.59839V6.24422H12.7996V5.59839ZM22.5904 26.1617C22.5769 26.6666 22.3669 27.1462 22.005 27.4985C21.6431 27.8507 21.1579 28.0477 20.6529 28.0476H10.8104C10.3054 28.0477 9.82022 27.8507 9.45832 27.4985C9.09642 27.1462 8.88636 26.6666 8.87289 26.1617L8.31747 7.53589H23.1458L22.5904 26.1617Z" fill="#252525"/>
-                                                <path d="M11.0498 11.3333C11.0498 11.162 11.1178 10.9978 11.239 10.8767C11.3601 10.7555 11.5244 10.6875 11.6956 10.6875C11.8669 10.6875 12.0312 10.7555 12.1523 10.8767C12.2734 10.9978 12.3415 11.162 12.3415 11.3333L12.6644 24.25C12.6644 24.4213 12.5963 24.5856 12.4752 24.7067C12.3541 24.8278 12.1898 24.8958 12.0186 24.8958C11.8473 24.8958 11.683 24.8278 11.5619 24.7067C11.4408 24.5856 11.3727 24.4213 11.3727 24.25L11.0498 11.3333ZM20.4144 11.3424C20.4144 11.1711 20.3463 11.0068 20.2252 10.8857C20.1041 10.7646 19.9398 10.6965 19.7686 10.6965C19.5973 10.6965 19.433 10.7646 19.3119 10.8857C19.1908 11.0068 19.1227 11.1711 19.1227 11.3424L18.7998 24.259C18.7998 24.4303 18.8678 24.5946 18.989 24.7157C19.1101 24.8368 19.2744 24.9049 19.4456 24.9049C19.6169 24.9049 19.7812 24.8368 19.9023 24.7157C20.0234 24.5946 20.0915 24.4303 20.0915 24.259L20.4144 11.3424Z" fill="#252525"/>
-                                            </svg>
-                                        </Link>
-                                    </div>
+                                    <Link to={'/staff/${participant.id}'} className="link-staff">
+                                        <div className="employee-info-staff">
+                                            <img className="avatar-staff" src={`http://localhost:8080${participant.avatar_url}`} alt={`avatar of ${participant.username}`} onError={(e) => e.target.src = 'http://localhost:8080/uploads/avatars/default%20avatar.jpg'} />
+                                            <p className="username-staff">{participant.username}</p>
+                                            <p className="position-staff">{participant.position}</p>
+                                        </div>
+                                    </Link>
                                 </div>
                             ))
                         )}

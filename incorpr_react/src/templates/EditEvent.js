@@ -12,7 +12,7 @@ const EditEvent = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
-    const [dateTime, setDateTime] = useState('');
+    const [date_time, setDateTime] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const EditEvent = () => {
                 setTitle(eventData.title);
                 setDescription(eventData.description);
                 setType(eventData.type);
-                setDateTime(eventData.dateTime);
+                setDateTime(eventData.date_time);
             } catch (err) {
                 setError('Ошибка при загрузке данных мероприятия. Попробуйте еще раз.');
             }
@@ -36,7 +36,7 @@ const EditEvent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8080/events/${id}/edit`, { title, description, type, dateTime });
+            const response = await axios.post(`http://localhost:8080/events/${id}/edit`, { title, description, type, date_time });
             if (response.status === 200) {
                 navigate(`/events/${id}`);
             }
@@ -119,7 +119,7 @@ const EditEvent = () => {
                                     name="dateTime"
                                     className="form-control-add-event datetime-add-event"
                                     required
-                                    value={dateTime}
+                                    value={date_time}
                                     onChange={(e) => setDateTime(e.target.value)}
                                 />
                             </label>

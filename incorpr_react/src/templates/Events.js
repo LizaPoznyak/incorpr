@@ -12,6 +12,7 @@ const Events = () => {
     const [types, setTypes] = useState([]);
     const [popularEvents, setPopularEvents] = useState([]);
     const [selectedType, setSelectedType] = useState('Все');
+    const [currentUserRole, setCurrentUserRole] = useState(localStorage.getItem('userRole'));
     const [error, setError] = useState(null);
 
     const colors = ['#252525', '#999999', '#999999', '#999999', '#999999'];
@@ -78,16 +79,18 @@ const Events = () => {
                         {filteredEvents.map(event => (
                             <Link to={`/events/${event.id}`} className="black-events" key={event.id}>
                                 <div className="event-events">
-                                    <p className="date-events">{new Date(event.dateTime).toLocaleDateString()}</p>
+                                    <p className="date-events">{new Date(event.date_time).toLocaleDateString()}</p>
                                     <p>{event.title}</p>
                                     <p className="type-events">{event.type}</p>
                                 </div>
                             </Link>
                         ))}
                     </div>
-                    <div className="add-btn-events">
-                        <Link to="/events/add" className="abtn centered-text-btn-events">Добавить</Link>
-                    </div>
+                    {currentUserRole === 'ADMIN' && (
+                        <div className="add-btn-events">
+                            <Link to="/events/add" className="abtn centered-text-btn-events">Добавить</Link>
+                        </div>
+                    )}
                 </div>
                 <aside className="sidebar-events">
                     <div className="filter-section-events">

@@ -14,7 +14,6 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("data: ", username, password);
         try {
             const response = await axios.post('http://localhost:8080/auth/sign-in', {
                 username: username,
@@ -24,10 +23,13 @@ const SignIn = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response.data);
             setMessage(response.data.message);
             if (response.data.userId) {
-                // You can store user info in localStorage or context if needed
+                // Сохранение информации о пользователе в localStorage
+                localStorage.setItem('userId', response.data.userId);
+                localStorage.setItem('userRole', response.data.role);
+
+                // Перенаправление на главную страницу после успешного входа
                 navigate('/');
             }
         } catch (error) {

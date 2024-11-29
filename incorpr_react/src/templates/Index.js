@@ -57,7 +57,7 @@ const Index = () => {
                     <div className="section">
                         <div className="head">
                             <h2>Вебинары</h2>
-                            <Link to="/events/all" className="more"><h2>Ещё ❯</h2></Link>
+                            <Link to="/events" className="more"><h2>Ещё ❯</h2></Link>
                         </div>
                         {webinars.length > 0 ? (
                             webinars.map((webinar, index) => (
@@ -79,7 +79,7 @@ const Index = () => {
                     <div className="section">
                         <div className="head">
                             <h2>Хакатоны</h2>
-                            <Link to="/events/all" className="more"><h2>Ещё ❯</h2></Link>
+                            <Link to="/events" className="more"><h2>Ещё ❯</h2></Link>
                         </div>
                         {hackathons.length > 0 ? (
                             hackathons.map((hackathon, index) => (
@@ -101,7 +101,7 @@ const Index = () => {
                     <div className="section">
                         <div className="head">
                             <h2>IT-конференции</h2>
-                            <Link to="/events/all" className="more"><h2>Ещё ❯</h2></Link>
+                            <Link to="/events" className="more"><h2>Ещё ❯</h2></Link>
                         </div>
                         {conferences.length > 0 ? (
                             conferences.map((conference, index) => (
@@ -123,7 +123,7 @@ const Index = () => {
                     <div className="section">
                         <div className="head">
                             <h2>Сотрудники</h2>
-                            <Link to="/staff/all" className="more"><h2>Ещё ❯</h2></Link>
+                            <Link to="/staff" className="more"><h2>Ещё ❯</h2></Link>
                         </div>
                         <div className="avatars">
                             {staff.length > 0 ? (
