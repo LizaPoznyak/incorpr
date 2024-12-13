@@ -38,29 +38,29 @@ public class SignUpController {
             @RequestParam String position,
             @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
 
-        Map<String, String> response = new HashMap<>();
+            Map<String, String> response = new HashMap<>();
 
-        if (!Objects.equals(password, confirmPassword)) {
-            response.put("message", "Passwords do not match");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        }
+            if (!Objects.equals(password, confirmPassword)) {
+                response.put("message", "Пароли не совпадают");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+            }
 
-        if (usersRepository.findByUsername(username) != null) {
-            response.put("message", "Username already exists");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        }
+            if (usersRepository.findByUsername(username) != null) {
+                response.put("message", "Пользователь с таким именем уже существует");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+            }
 
-        String avatarUrl = (avatar != null && !avatar.isEmpty()) ? saveAvatar(avatar) : "/uploads/avatars/default avatar.jpg";
-        String encodedPassword = passwordEncoder.encode(password);
+            String avatarUrl = (avatar != null && !avatar.isEmpty()) ? saveAvatar(avatar) : "/uploads/avatars/default avatar.jpg";
+            String encodedPassword = passwordEncoder.encode(password);
 
-        User user = new User(username, encodedPassword, position, avatarUrl, Role.USER);
-        usersRepository.save(user);
+            User user = new User(username, encodedPassword, position, avatarUrl, Role.USER);
+            usersRepository.save(user);
 
-        response.put("message", "User registered successfully");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            response.put("message", "Пользователь успешно зарегистрирован");
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    private String saveAvatar(MultipartFile avatar) {
+    public static String saveAvatar(MultipartFile avatar) {
         String uploadDir = "src/main/resources/static/uploads/avatars/";
         File directory = new File(uploadDir);
         if (!directory.exists()) {

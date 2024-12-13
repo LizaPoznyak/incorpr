@@ -122,18 +122,18 @@ const Index = () => {
 
                     <div className="section">
                         <div className="head">
-                            <h2>Сотрудники</h2>
+                            <h2>Пользователи</h2>
                             <Link to="/staff" className="more"><h2>Ещё ❯</h2></Link>
                         </div>
                         <div className="avatars">
                             {staff.length > 0 ? (
                                 staff.map((employee) => (
                                     <Link to={`/staff/${employee.id}`} key={employee.id}>
-                                        <img className="avatar" src={`http://localhost:8080${employee.avatar_url}`} alt={`avatar of ${employee.username}`} onError={(e) => e.target.src = 'http://localhost:8080/uploads/avatars/default%20avatar.jpg'} />
+                                        <img className="avatar" src={`http://localhost:8080${employee.avatarUrl}`} alt={`avatar of ${employee.username}`} onError={(e) => e.target.src = 'http://localhost:8080/uploads/avatars/default%20avatar.jpg'} />
                                     </Link>
                                 ))
                             ) : (
-                                <p>Нет доступных сотрудников</p>
+                                <p>Нет доступных пользователей</p>
                             )}
                         </div>
                     </div>

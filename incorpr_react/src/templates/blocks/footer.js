@@ -12,7 +12,7 @@ const Footer = () => {
                     <div class="navigation-panel">
                         <div class="main-page"><Link to="/" class="home">Главная</Link></div>
                         <div class="it-events"><Link to="/events" class="events">Мероприятия</Link></div>
-                        <div class="staff"><Link to="/staff" class="employees">Сотрудники</Link></div>
+                        <div class="staff"><Link to="/staff" class="employees">Пользователи</Link></div>
                     </div>
                     <div class="copyright">
                         <div class="copyright-text">

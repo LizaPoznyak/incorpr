@@ -2,7 +2,7 @@ package com.example.incorpr.controllers;
 
 import com.example.incorpr.controllers.main.Main;
 import com.example.incorpr.models.Event;
-import com.example.incorpr.models.User;
+import com.example.incorpr.service.UserDTO;
 import com.example.incorpr.repositories.EventsRepository;
 import com.example.incorpr.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class MainController extends Main {
 
     @GetMapping("/")
     public String mainPage() {
-        return "Main page uploaded";
+        return "Главная страница загружена";
     }
 
     @GetMapping("/webinars")
@@ -35,7 +35,6 @@ public class MainController extends Main {
                 .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(5)
                 .collect(Collectors.toList());
-        System.out.println("Webinars: " + webinars);
         return ResponseEntity.ok(webinars);
     }
 
@@ -46,7 +45,6 @@ public class MainController extends Main {
                 .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(5)
                 .collect(Collectors.toList());
-        System.out.println("Hackathons: " + hackathons);
         return ResponseEntity.ok(hackathons);
     }
 
@@ -57,17 +55,16 @@ public class MainController extends Main {
                 .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(5)
                 .collect(Collectors.toList());
-        System.out.println("Conferences: " + conferences);
         return ResponseEntity.ok(conferences);
     }
 
     @GetMapping("/staff")
-    public ResponseEntity<List<User>> getStaff() {
-        List<User> staff = usersRepository.findAll().stream()
+    public ResponseEntity<List<UserDTO>> getStaff() {
+        List<UserDTO> staff = usersRepository.findAll().stream()
                 .sorted((e1, e2) -> Long.compare(e2.getId(), e1.getId()))
                 .limit(4)
+                .map(user -> new UserDTO(user.getId(), user.getUsername(), user.getPosition(), user.getAvatarUrl()))
                 .collect(Collectors.toList());
-        staff.forEach(user -> System.out.println("User: " + user.getUsername() + ", Avatar URL: " + user.getAvatarUrl()));
         return ResponseEntity.ok(staff);
     }
 

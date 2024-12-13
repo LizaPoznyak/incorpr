@@ -32,29 +32,33 @@ public class SignInController {
     public ResponseEntity<Map<String, String>> signIn(@RequestBody User user) {
         Map<String, String> response = new HashMap<>();
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
             User userCheck = usersRepository.findByUsername(user.getUsername());
             if (userCheck != null) {
-                response.put("message", "User logged in successfully");
-                response.put("userId", String.valueOf(userCheck.getId()));
-                response.put("role", userCheck.getRole().toString());
-                return ResponseEntity.ok(response);
+                if (passwordEncoder.matches(user.getPassword(), userCheck.getPassword())) {
+                    Authentication authentication = authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                    response.put("message", "Пользователь успешно вошел");
+                    response.put("userId", String.valueOf(userCheck.getId()));
+                    response.put("role", userCheck.getRole().toString());
+                    return ResponseEntity.ok(response);
+                } else {
+                    response.put("message", "Неправильный логин или пароль");
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+                }
             } else {
-                response.put("message", "Invalid username or password");
+                response.put("message", "Неправильный логин или пароль");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } catch (BadCredentialsException e) {
-            response.put("message", "Invalid username or password");
+            response.put("message", "Неправильный логин или пароль");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         } catch (Exception e) {
-            response.put("message", "Authentication error");
+            response.put("message", "Ошибка входа");
             response.put("error", e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
 }

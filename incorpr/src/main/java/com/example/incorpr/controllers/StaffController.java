@@ -5,17 +5,20 @@ import com.example.incorpr.models.EventRegistration;
 import com.example.incorpr.models.User;
 import com.example.incorpr.repositories.EventRegistrationRepository;
 import com.example.incorpr.repositories.UsersRepository;
+import com.example.incorpr.service.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/staff")
@@ -52,9 +55,12 @@ public class StaffController extends Main {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<User>> staff() {
+    public ResponseEntity<List<UserDTO>> staff() {
         List<User> users = usersRepository.findAll();
-        return ResponseEntity.ok(users);
+        List<UserDTO> userDTOs = users.stream()
+                .map(user -> new UserDTO(user.getId(), user.getUsername(), user.getPosition(), user.getAvatarUrl()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
     }
 
     @GetMapping("/{id}")
@@ -76,22 +82,30 @@ public class StaffController extends Main {
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity<String> editProfilePost(@RequestBody User user) { //(@PathVariable(value = "id") Long id, @RequestParam String username, @RequestParam String position, @RequestParam String avatarUrl) {
-        //User user = usersRepository.findById(id).orElseThrow();
-        String username = user.getUsername();
-        String position = user.getPosition();
-        String avatarUrl = user.getAvatarUrl();
-        if (!user.getUsername().equals(username)) {
-            User existingUser = usersRepository.findByUsername(username);
-            if (existingUser != null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique username");
+    public ResponseEntity<String> editProfilePost(@PathVariable(value = "id") Long id, @RequestPart("user") User user, @RequestPart(value = "avatar", required = false) MultipartFile avatar) {
+        User existingUser = usersRepository.findById(id).orElseThrow();
+
+        if (!existingUser.getUsername().equals(user.getUsername())) {
+            User userWithSameUsername = usersRepository.findByUsername(user.getUsername());
+            if (userWithSameUsername != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Введите уникальный логин");
             }
         }
-        user.setUsername(username);
-        user.setPosition(position);
-        user.setAvatarUrl(avatarUrl);
-        usersRepository.save(user);
-        return ResponseEntity.ok("User was updated");
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPosition(user.getPosition());
+
+        // Обработка файла аватара, если он есть
+        if (avatar != null && !avatar.isEmpty()) {
+            String avatarUrl = SignUpController.saveAvatar(avatar); // Реализуйте метод saveAvatar для сохранения файла и получения URL
+            existingUser.setAvatarUrl(avatarUrl);
+        } else if (existingUser.getAvatarUrl() == null || existingUser.getAvatarUrl().isEmpty()) {
+            // Устанавливаем аватар по умолчанию, если аватар не был передан и отсутствует текущий аватар
+            existingUser.setAvatarUrl("/uploads/avatars/default avatar.jpg");
+        }
+
+        usersRepository.save(existingUser);
+        return ResponseEntity.ok("Пользователь обновлен");
     }
 
     @PostMapping("/{id}/delete")
@@ -100,7 +114,7 @@ public class StaffController extends Main {
         List<EventRegistration> userRegistrations = eventRegistrationRepository.findByUser(user);
         eventRegistrationRepository.deleteAll(userRegistrations);
         usersRepository.delete(user);
-        return ResponseEntity.ok("User was deleted");
+        return ResponseEntity.ok("Пользователь удален");
     }
 
 }

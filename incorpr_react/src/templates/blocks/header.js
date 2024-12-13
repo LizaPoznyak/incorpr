@@ -43,7 +43,7 @@ const Header = () => {
                     <nav id="navigation" role="navigation" className="d-inline-flex ms-md-3 nav-menu">
                         <Link to="/" className="me-3 py-2 link-body-emphasis text-decoration-none nav-link">Главная</Link>
                         <Link to="/events" className="me-3 py-2 link-body-emphasis text-decoration-none nav-link">Мероприятия</Link>
-                        <Link to="/staff" className="me-3 py-2 link-body-emphasis text-decoration-none nav-link">Сотрудники</Link>
+                        <Link to="/staff" className="me-3 py-2 link-body-emphasis text-decoration-none nav-link">Пользователи</Link>
                     </nav>
                 </div>
                 <div className="header-icons">

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'; 
-import axios from 'axios'; 
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/edit-event.css';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
 import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/footer';
 
 const EditEvent = () => {
-    
     const { id } = useParams();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -36,7 +35,7 @@ const EditEvent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8080/events/${id}/edit`, { title, description, type, date_time });
+            const response = await axios.post(`http://localhost:8080/events/${id}/edit`, { title, description, type, date_time: date_time });
             if (response.status === 200) {
                 navigate(`/events/${id}`);
             }
@@ -44,7 +43,7 @@ const EditEvent = () => {
             setError('Ошибка при редактировании мероприятия. Попробуйте еще раз.');
         }
     };
-    
+
     return (
         <div className="body">
             <Header />
@@ -94,11 +93,11 @@ const EditEvent = () => {
                                         <input
                                             type="radio"
                                             name="type"
-                                            value="IT-конференция"
+                                            value="Конференция"
                                             required
-                                            checked={type === 'IT-конференция'}
+                                            checked={type === 'Конференция'}
                                             onChange={(e) => setType(e.target.value)}
-                                        /> IT-конференция
+                                        /> Конференция
                                     </label>
                                     <label className="radio-add-event">
                                         <input
@@ -116,7 +115,7 @@ const EditEvent = () => {
                                 Дата и время
                                 <input
                                     type="datetime-local"
-                                    name="dateTime"
+                                    name="date_time"
                                     className="form-control-add-event datetime-add-event"
                                     required
                                     value={date_time}
@@ -124,7 +123,7 @@ const EditEvent = () => {
                                 />
                             </label>
                         </div>
-                        <Link to="/events/id" className="abtn centered-text-btn-add-event">Сохранить</Link>
+                        <button type="submit" className="abtn centered-text-btn-add-event">Сохранить</button>
                     </form>
                     {error && <p>{error}</p>}
                 </div>

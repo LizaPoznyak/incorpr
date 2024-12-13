@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'; 
-import axios from 'axios'; 
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/edit-profile.css';
 import 'C:/Users/admin/incorpr repository/incorpr_react/src/static/index.css';
 import Header from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/header';
 import Footer from 'C:/Users/admin/incorpr repository/incorpr_react/src/templates/blocks/footer';
 
 const EditProfile = () => {
-    
     const { id } = useParams();
     const [username, setUsername] = useState('');
     const [position, setPosition] = useState('');
@@ -44,17 +43,14 @@ const EditProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('username', username);
-        formData.append('position', position);
+        const user = { username, position };
+        formData.append('user', new Blob([JSON.stringify(user)], { type: 'application/json' }));
         if (file) {
             formData.append('avatar', file);
         }
+
         try {
-            const response = await axios.post(`http://localhost:8080/staff/${id}/edit`, {
-                username: username,
-                position: position,
-                avatar: file
-            }, {
+            const response = await axios.post(`http://localhost:8080/staff/${id}/edit`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

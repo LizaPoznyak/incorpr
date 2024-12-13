@@ -8,6 +8,7 @@ import com.example.incorpr.models.enums.Type;
 import com.example.incorpr.repositories.EventRegistrationRepository;
 import com.example.incorpr.repositories.EventsRepository;
 import com.example.incorpr.repositories.UsersRepository;
+import com.example.incorpr.service.UserDTO;
 import com.lowagie.text.*;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.http.HttpStatus;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
@@ -68,25 +71,25 @@ public class EventsController extends Main {
 
     @GetMapping("/add")
     public ResponseEntity<String> addEvent() {
-        return ResponseEntity.ok("Add event page uploaded");
+        return ResponseEntity.ok("Страница добавления мероприятия загружена");
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addEventPost(@RequestBody Event event) {
         Event existingEvent = eventsRepository.findByTitle(event.getTitle());
         if (existingEvent != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique title");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Введите уникальное название");
         }
         LocalDateTime currentDate = LocalDateTime.now();
         if (event.getDateTime().isBefore(currentDate)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose future date");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Выберите будущую дату");
         }
         try {
             eventsRepository.save(event);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving event: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка сохранения мероприятия: " + e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Event was added");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Мероприятие добавлено");
     }
 
     @GetMapping("/{id}")
@@ -108,18 +111,24 @@ public class EventsController extends Main {
     }
 
     @PostMapping("/{id}/edit")
-    public ResponseEntity<String> editEventPost(@PathVariable(value = "id") Long id, @RequestParam String title, @RequestParam String description, @RequestParam String type, @RequestParam LocalDateTime dateTime) {
+    public ResponseEntity<String> editEventPost(@PathVariable(value = "id") Long id, @RequestBody Map<String, Object> payload) {
         Event event = eventsRepository.findById(id).orElseThrow();
+
+        String title = (String) payload.get("title");
+        String description = (String) payload.get("description");
+        String type = (String) payload.get("type");
+        LocalDateTime dateTime = LocalDateTime.parse((String) payload.get("date_time"));
+
         if (!event.getTitle().equals(title)) {
             Event existingEvent = eventsRepository.findByTitle(title);
             if (existingEvent != null) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Enter a unique title");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Введите уникальное название");
             }
         }
         if (!event.getDateTime().equals(dateTime)) {
             LocalDateTime currentDate = LocalDateTime.now();
             if (dateTime.isBefore(currentDate)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose future date");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Выберите будущую дату");
             }
         }
         event.setTitle(title);
@@ -127,7 +136,7 @@ public class EventsController extends Main {
         event.setType(type);
         event.setDateTime(dateTime);
         eventsRepository.save(event);
-        return ResponseEntity.ok("Event was updated");
+        return ResponseEntity.ok("Мероприятие обновлено");
     }
 
     @PostMapping("/{id}/delete")
@@ -136,7 +145,7 @@ public class EventsController extends Main {
         List<EventRegistration> registrations = eventRegistrationRepository.findByEvent(event);
         eventRegistrationRepository.deleteAll(registrations);
         eventsRepository.delete(event);
-        return ResponseEntity.ok("Event was deleted");
+        return ResponseEntity.ok("Мероприятие удалено");
     }
 
     @PostMapping("/{id}/register")
@@ -150,7 +159,7 @@ public class EventsController extends Main {
                 eventRegistrationRepository.save(eventRegistration);
             }
         }
-        return ResponseEntity.ok("User registered for event");
+        return ResponseEntity.ok("Пользователь зарегистрирован");
     }
 
     @PostMapping("/{id}/cancel-registration")
@@ -161,7 +170,7 @@ public class EventsController extends Main {
         if (existingRegistration != null) {
             eventRegistrationRepository.delete(existingRegistration);
         }
-        return ResponseEntity.ok("User registration was cancelled");
+        return ResponseEntity.ok("Регистрация пользователя отклонена");
     }
 
     @GetMapping("/{id}/isRegistered")
@@ -173,11 +182,22 @@ public class EventsController extends Main {
     }
 
     @GetMapping("/{id}/users")
-    public ResponseEntity<List<User>> viewRegisteredUsers(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Map<String, Object>> viewRegisteredUsers(@PathVariable(value = "id") Long id) {
         Event event = eventsRepository.findById(id).orElseThrow();
         List<EventRegistration> eventRegistrations = eventRegistrationRepository.findByEvent(event);
-        List<User> users = eventRegistrations.stream().map(EventRegistration::getUser).collect(Collectors.toList());
-        return ResponseEntity.ok(users);
+        List<UserDTO> users = eventRegistrations.stream()
+                .map(registration -> new UserDTO(
+                        registration.getUser().getId(),
+                        registration.getUser().getUsername(),
+                        registration.getUser().getPosition(),
+                        registration.getUser().getAvatarUrl()))
+                .collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("title", event.getTitle());
+        response.put("users", users);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}/attendance-report")
